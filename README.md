@@ -60,5 +60,10 @@ About screen.
 The app will sync the repo and occasionally check for updates whenever you open it by default.
 You can turn these off in Settings.
 
+# Extras
+The source code for this app also includes UnityKt, a brand new Unity assets file manipulation library
+written in Kotlin that was specifically made for this project. It is currently located in
+[com.leadrdrk.umapatcher.unity](app/src/main/java/com/leadrdrk/umapatcher/unity)
+
 # License
 [Apache License 2.0](LICENSE)

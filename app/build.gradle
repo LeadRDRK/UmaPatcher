@@ -1,0 +1,87 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.devtools.ksp' version '1.9.20-1.0.14'
+    id 'com.mikepenz.aboutlibraries.plugin'
+}
+
+android {
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.leadrdrk.umapatcher"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0-beta1"
+    }
+
+    buildTypes {
+        release {
+            // TODO: ProGuard currently causes a lot of issues, needs more rules
+            /*
+            postprocessing {
+                removeUnusedCode true
+                removeUnusedResources true
+                obfuscate false
+                optimizeCode true
+                proguardFiles 'proguard-rules.pro'
+            }
+            */
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+        buildConfig true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    packagingOptions {
+        resources {
+            excludes += "META-INF/*"
+            // for some unknown reason the macOS jni library would get included in the apk
+            excludes += "net/jpountz/**"
+        }
+    }
+    namespace 'com.leadrdrk.umapatcher'
+}
+
+kotlin {
+    jvmToolchain(8)
+}
+
+aboutLibraries {
+    configPath = "config"
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation 'androidx.compose.material3:material3:1.1.2'
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+    implementation 'androidx.activity:activity-compose:1.8.2'
+    implementation 'androidx.navigation:navigation-compose:2.7.6'
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
+    implementation 'io.github.raamcosta.compose-destinations:animations-core:1.9.55'
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.9.55'
+    implementation 'com.mikepenz:aboutlibraries-core:10.9.2'
+    implementation 'com.mikepenz:aboutlibraries-compose:10.9.2'
+    // Any JGit version newer than 4.7.0 is **EXTREMELY** slow at resolving deltas
+    // https://git.eclipse.org/r/c/jgit/jgit/+/91837
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:4.6.1.201703071140-r'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.github.topjohnwu.libsu:core:5.2.2'
+    implementation 'org.lz4:lz4-java:1.8.0'
+
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+}

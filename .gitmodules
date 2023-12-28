@@ -1,0 +1,12 @@
+[submodule "app/src/main/cpp/libgit2"]
+	path = app/src/main/cpp/libgit2
+	url = https://github.com/libgit2/libgit2.git
+[submodule "app/src/main/cpp/openssl"]
+	path = app/src/main/cpp/openssl
+	url = https://github.com/openssl/openssl.git
+[submodule "app/src/main/c/openssl"]
+	path = app/src/main/c/openssl
+	url = https://github.com/openssl/openssl.git
+[submodule "app/src/main/c/libgit2"]
+	path = app/src/main/c/libgit2
+	url = https://github.com/libgit2/libgit2.git

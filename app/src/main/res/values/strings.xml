@@ -1,0 +1,117 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyEllipsis">
+    <string name="app_name">UmaPatcher</string>
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+
+    <!-- Home -->
+    <string name="game_installed">Game is installed</string>
+    <string name="game_not_installed">Game is not installed</string>
+    <string name="game_not_installed_info">Please install the game. Note that only the JP version is supported.</string>
+    <string name="package_name_prefix">"Package: "</string>
+    <string name="version_name_prefix">"Version: "</string>
+    <string name="sync_git_repo">Sync Git repo</string>
+    <string name="confirm_restore_desc">Do you want to restore the files?</string>
+
+    <string name="mdb_patcher_label">master.mdb</string>
+    <string name="story_patcher_label">Story</string>
+    <string name="race_patcher_label">Race story</string>
+    <string name="home_patcher_label">Home dialog</string>
+    <string name="preview_patcher_label">Preview</string>
+    <string name="lyrics_patcher_label">Lyrics</string>
+    <string name="patch">Patch</string>
+    <string name="restore">Restore</string>
+    <string name="patched_prefix">"Patched: "</string>
+    <string name="last_modified_prefix">"Last modified: "</string>
+    <string name="translation_last_updated_prefix">"Translation last updated: "</string>
+
+    <!-- Settings -->
+    <string name="sync_on_startup">Sync translation repo on startup</string>
+    <string name="sync_on_startup_desc">Keep the translation repo up to date by syncing it when the app starts.</string>
+    <string name="git_remote">Git remote</string>
+    <string name="git_branch">Git branch</string>
+    <string name="check_for_updates_desc">Occasionally check for updates when the app starts.</string>
+
+    <!-- About -->
+    <string name="app_desc">An Uma Musume: Pretty Derby translation patching tool for Android.\nBased on umamusu-translate by noccu et al.\nAdditional translations provided by Gertas (GameTora)</string>
+    <string name="check_for_updates">Check for updates</string>
+    <string name="open_source_licenses">Open source licenses</string>
+    <string name="view_source_code">View source code</string>
+    <string name="support_me">Support me on Ko-fi</string>
+
+    <!-- Patcher options -->
+    <string name="options">Options</string>
+    <string name="confirm">Confirm</string>
+    <string name="install_method">Install method</string>
+    <string name="install_method_desc">How you want the patch to be installed.</string>
+    <string name="direct_install">Direct install (recommended, root required)</string>
+    <string name="select_and_patch_a_file">Select and patch a file</string>
+    <string name="make_backup">Make a backup</string>
+    <string name="make_backup_desc">You will be able to restore the files later. Only for direct install.</string>
+    <string name="skill_descriptions">Skill descriptions</string>
+    <string name="translation_variant_desc">Which translation variant you want to use.</string>
+    <string name="flavour_text">Flavour text (Original)</string>
+    <string name="data_values">Data values (Effects &amp; Conditions)</string>
+    <string name="skip_machine_tl">Skip machine translation</string>
+    <string name="skip_machine_tl_desc">Apply human translated strings only.</string>
+    <string name="number_of_threads">Number of threads</string>
+    <string name="force_patch">Force patch</string>
+    <string name="force_patch_desc">Force patch all files, including the ones that have already been patched.</string>
+    <string name="characters_per_second">Characters per second</string>
+    <string name="frame_rate">Frame rate</string>
+
+    <!-- Patching -->
+    <string name="working">Working...</string>
+    <string name="completed">Completed</string>
+    <string name="patch_success_msg">[Patching successful]</string>
+    <string name="patch_failed_msg">[Patching failed]</string>
+    <string name="initial_sync_info">The translation repo is being synced for the first time. This might take a while.</string>
+    <string name="waiting_for_sync">Waiting for sync to complete...</string>
+    <string name="direct_install_unavailable">Direct install can only be used when the game is installed.</string>
+    <string name="root_required">Root permission is required for this operation.</string>
+    <string name="game_data_not_found">Game data not found. Please let the game download its data before patching.</string>
+    <string name="file_not_found_skip">File not found: \"%s\". Skipping.</string>
+    <string name="failed_to_read_file">Failed to read file: %s</string>
+    <string name="failed_to_read_file_skip">Failed to read file: \"%s\". Skipping.</string>
+    <string name="failed_to_copy_file">Failed to copy file: %s</string>
+    <string name="invalid_file_skip">Invalid file: \"%s\". Skipping.</string>
+    <string name="failed_to_create_dir">Failed to create directory: %s</string>
+    <string name="copying_file">Copying file: %s</string>
+    <string name="processing_file">Processing file: %s</string>
+    <string name="installing">Installing</string>
+    <string name="install_completed">Install completed</string>
+    <string name="install_failed">Install failed</string>
+    <string name="backing_up">Backing up</string>
+    <string name="backing_up_name">Backing up: %s</string>
+    <string name="restoring_files">Restoring files</string>
+    <string name="failed_to_restore_file">Failed to restore file: %s</string>
+    <string name="failed_to_list_dir">Failed to list directory: %s</string>
+    <string name="patching_files_n">Patching files (%d/%d)</string>
+    <string name="translation_dir_not_exist">The translation directory does not exist (invalid translation repo)</string>
+
+    <!-- MdbPatcher -->
+    <string name="opening_db">Opening database</string>
+    <string name="reading_index_file">Reading index file</string>
+    <string name="translating_table">Translating table: %s</string>
+    <string name="n_entries_not_found">%d entries were not found</string>
+    <string name="n_rows_translated">%d rows translated</string>
+
+    <!-- AssetsPatcher -->
+    <string name="patching_bundle">Patching bundle: %s</string>
+    <string name="bundle_patched_skip">Bundle already patched: \"%s\". Skipping.</string>
+    <string name="object_not_found_skip">Object not found: \"%s\". Skipping.</string>
+    <string name="bundle_patch_result">%s - %d text blocks translated, %d skipped</string>
+
+    <!-- Other -->
+    <string name="syncing">Syncing...</string>
+    <string name="syncing_desc">Syncing local translation repo with remote repo...</string>
+    <string name="sync_failed">Sync failed</string>
+    <string name="sync_failed_desc">Failed to sync translation repo. Please check your internet connection or your Git settings.</string>
+    <string name="loading">Loading...</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="update_available">Update available</string>
+    <string name="update_available_desc">A new version is available: %s\nOpen the download page?</string>
+    <string name="failed_to_check_for_updates">Failed to check for updates</string>
+    <string name="no_updates_available">No updates available</string>
+</resources>

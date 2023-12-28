@@ -1,0 +1,10 @@
+{
+  "uniqueId": "com.github.topjohnwu.libsu:core",
+  "developers": [
+    { "name": "John Wu" }
+  ],
+  "description": "A complete solution for apps using root permissions.",
+  "name": "libsu",
+  "website": "https://github.com/topjohnwu/libsu",
+  "licenses": ["Apache-2.0"]
+}

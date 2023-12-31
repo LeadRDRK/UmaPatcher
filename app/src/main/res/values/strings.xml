@@ -19,6 +19,7 @@
     <string name="home_patcher_label">Home dialog</string>
     <string name="preview_patcher_label">Preview</string>
     <string name="lyrics_patcher_label">Lyrics</string>
+    <string name="app_patcher_label">App (UI text, etc.)</string>
     <string name="patch">Patch</string>
     <string name="restore">Restore</string>
     <string name="patched_prefix">"Patched: "</string>
@@ -59,6 +60,10 @@
     <string name="force_patch_desc">Force patch all files, including the ones that have already been patched.</string>
     <string name="characters_per_second">Characters per second</string>
     <string name="frame_rate">Frame rate</string>
+    <string name="apk_file">APK file</string>
+    <string name="apk_file_desc">Which APK file you want to patch.</string>
+    <string name="get_apk_file_from_app">Get APK file from installed app</string>
+    <string name="save_patched_apk_file">Save patched APK file</string>
 
     <!-- Patching -->
     <string name="working">Working...</string>
@@ -101,6 +106,30 @@
     <string name="bundle_patched_skip">Bundle already patched: \"%s\". Skipping.</string>
     <string name="object_not_found_skip">Object not found: \"%s\". Skipping.</string>
     <string name="bundle_patch_result">%s - %d text blocks translated, %d skipped</string>
+
+    <!-- AppPatcher -->
+    <string name="syncing_app_libs">Syncing Carrotless libraries</string>
+    <string name="failed_to_download_app_libs">Failed to download Carrotless libraries</string>
+    <string name="failed_to_sync_app_libs">Failed to sync Carrotless libraries. Skipping.</string>
+    <string name="app_lib_updated">Carrotless has been updated</string>
+    <string name="using_app_lib_ver">Using Carrotless %s</string>
+    <string name="corrupted_file_abort_download">Corrupted file detected, aborting download</string>
+    <string name="patching_apk_file">Patching APK file</string>
+    <string name="failed_to_patch_apk_file">Failed to patch APK file: %s</string>
+    <string name="aligning_apk_file">Aligning APK file</string>
+    <string name="signing_apk_file">Signing APK file</string>
+    <string name="unmounting_apk_file">Unmounting APK file</string>
+    <string name="copying_localized_data">Copying localized data</string>
+    <string name="mount_install_note">
+        \n
+        ********** NOTE **********\n
+        The modified app has now been mounted. However, this will be reverted whenever your
+        device restarts, which will undo the modification on some devices. To remount the app
+        after a restart, open UmaPatcher and tap on the Mount button in the App patcher section.
+    </string>
+    <string name="mount">Mount</string>
+    <string name="unmount">Unmount</string>
+    <string name="install_data">Install data</string>
 
     <!-- Other -->
     <string name="syncing">Syncing...</string>

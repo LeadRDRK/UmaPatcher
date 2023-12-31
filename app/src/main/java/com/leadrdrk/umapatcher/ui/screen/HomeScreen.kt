@@ -43,6 +43,7 @@ import com.leadrdrk.umapatcher.core.GameChecker
 import com.leadrdrk.umapatcher.git.GitRepo
 import com.leadrdrk.umapatcher.ui.component.SimpleOkCancelDialog
 import com.leadrdrk.umapatcher.ui.component.TopBar
+import com.leadrdrk.umapatcher.ui.patcher.AppPatcherCard
 import com.leadrdrk.umapatcher.ui.patcher.HomePatcherCard
 import com.leadrdrk.umapatcher.ui.patcher.LyricsPatcherCard
 import com.leadrdrk.umapatcher.ui.patcher.MdbPatcherCard
@@ -124,6 +125,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
             HomePatcherCard(navigator, ::showConfirmRestoreDialog)
             PreviewPatcherCard(navigator, ::showConfirmRestoreDialog)
             LyricsPatcherCard(navigator, ::showConfirmRestoreDialog)
+            AppPatcherCard(navigator)
             Spacer(Modifier.height(8.dp))
             
             if (openDialog) {

@@ -21,6 +21,7 @@ object PrefKey {
     val SYNC_ON_STARTUP = booleanPreferencesKey("sync_on_startup")
     val CHECK_FOR_UPDATES = booleanPreferencesKey("check_for_updates")
     val LAST_UPDATE_CHECK = longPreferencesKey("last_update_check")
+    val APP_LIBS_VERSION = stringPreferencesKey("app_libs_version")
 }
 
 val defaultValues = mapOf(
@@ -29,15 +30,16 @@ val defaultValues = mapOf(
     Pair(PrefKey.GIT_BRANCH, "master"),
     Pair(PrefKey.SYNC_ON_STARTUP, true),
     Pair(PrefKey.CHECK_FOR_UPDATES, true),
-    Pair(PrefKey.LAST_UPDATE_CHECK, 0L)
+    Pair(PrefKey.LAST_UPDATE_CHECK, 0L),
+    Pair(PrefKey.APP_LIBS_VERSION, null)
 )
 
-suspend fun Context.getPrefValue(key: Preferences.Key<*>): Any {
+suspend fun Context.getPrefValue(key: Preferences.Key<*>): Any? {
     return withContext(Dispatchers.IO) {
         val value = dataStore.data
             .map {
                 it[key]
             }
-        return@withContext value.firstOrNull() ?: defaultValues[key]!!
+        return@withContext value.firstOrNull() ?: defaultValues[key]
     }
 }

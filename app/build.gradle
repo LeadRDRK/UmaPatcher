@@ -71,6 +71,7 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.8.2'
     implementation 'androidx.navigation:navigation-compose:2.7.6'
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
+    implementation 'androidx.documentfile:documentfile:1.0.1'
     implementation 'io.github.raamcosta.compose-destinations:animations-core:1.9.55'
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.9.55'
     implementation 'com.mikepenz:aboutlibraries-core:10.9.2'
@@ -81,6 +82,10 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.github.topjohnwu.libsu:core:5.2.2'
     implementation 'org.lz4:lz4-java:1.8.0'
+    implementation 'net.lingala.zip4j:zip4j:2.11.5'
+    implementation files('libs/zipalign-java-1.0.0.jar')
+    implementation 'com.android.tools.build:apksig:8.2.0'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.77'
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"

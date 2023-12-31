@@ -9,7 +9,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.leadrdrk.umapatcher.R
 import com.leadrdrk.umapatcher.patcher.HomePatcher
-import com.leadrdrk.umapatcher.ui.component.AssetsPatcherCardBase
 import com.leadrdrk.umapatcher.ui.screen.destinations.HomePatcherOptionsScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 

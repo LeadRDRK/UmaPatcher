@@ -1,4 +1,4 @@
-package com.leadrdrk.umapatcher.ui.component
+package com.leadrdrk.umapatcher.ui.patcher
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Build
@@ -14,8 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.leadrdrk.umapatcher.R
 import com.leadrdrk.umapatcher.patcher.Patcher
-import com.leadrdrk.umapatcher.ui.patcher.PatcherCard
-import com.leadrdrk.umapatcher.ui.patcher.PatcherLauncher
+import com.leadrdrk.umapatcher.ui.component.LastCommitTimeEffect
 import com.leadrdrk.umapatcher.ui.screen.destinations.DirectionDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 

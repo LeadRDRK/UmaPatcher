@@ -8,7 +8,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.leadrdrk.umapatcher.R
 import com.leadrdrk.umapatcher.patcher.RacePatcher
-import com.leadrdrk.umapatcher.ui.component.AssetsPatcherCardBase
 import com.leadrdrk.umapatcher.ui.screen.destinations.RacePatcherOptionsScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 

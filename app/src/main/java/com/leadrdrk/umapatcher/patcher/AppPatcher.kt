@@ -359,6 +359,10 @@ class AppPatcher(
         fun installData(context: Context, dest: DocumentFile, callback: (Boolean) -> Unit) {
             installScope.launch {
                 val src = context.repoDir.resolve(APP_TRANSLATIONS_PATH)
+                if (!src.exists()) {
+                    callback(false)
+                    return@launch
+                }
                 callback(copyDirectory(context, src, dest))
             }
         }

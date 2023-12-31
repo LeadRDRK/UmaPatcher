@@ -118,7 +118,7 @@ fun PatchingScreen(navigator: DestinationsNavigator) {
 
     val lifecycleOwner = LocalLifecycleOwner.current
     BackHandler {
-        if (completed) {
+        if (completed && sfFile == null) {
             safeNavigate(lifecycleOwner) {
                 navigator.popBackStack()
             }

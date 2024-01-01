@@ -110,12 +110,16 @@ class AppPatcher(
                 val armv8LibNewPath = "$ARMV8A_LIB_DIR/libmain_orig.so"
                 val armv7LibNewPath = "$ARMV7A_LIB_DIR/libmain_orig.so"
 
-                log(armv8LibNewPath)
-                zip.renameFile(armv8LibPath, armv8LibNewPath)
+                if (zip.getFileHeader(armv8LibNewPath) == null) {
+                    log(armv8LibNewPath)
+                    zip.renameFile(armv8LibPath, armv8LibNewPath)
+                }
                 progress = 1 / 4f
 
-                log(armv7LibNewPath)
-                zip.renameFile(armv7LibPath, armv7LibNewPath)
+                if (zip.getFileHeader(armv7LibNewPath) == null) {
+                    log(armv7LibNewPath)
+                    zip.renameFile(armv7LibPath, armv7LibNewPath)
+                }
                 progress = 2 / 4f
 
                 log(armv8LibPath)

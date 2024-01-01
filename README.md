@@ -21,6 +21,7 @@ Download the latest release from the [Releases page](https://github.com/LeadRDRK
   - Stories (character stories, race stories, etc.)
   - Home screen dialogs/interactions
   - Lyrics
+  - UI translations via [Carrotless](https://github.com/LeadRDRK/Carrotless)
 - Translation repo syncing: Allows you to quickly pull the latest translations using Git.
 - Custom Git repo: You can use any Git repo that's a fork of umamusu-translate.
 - Backup/restore asset files.
@@ -31,13 +32,22 @@ with up to date translations for the skill names/descriptions and character name
 ### Planned
 - General asset management tools.
 
-### Not planned (for now)
-- UI translations.
-
 # How to use
 The app should be self-explanatory. On the Home screen, tap on the Patch button on any of the cards,
 customize the options if needed then hit Confirm. The patching process should begin. You'll need to
 repeat this for each part of the game you want to patch.
+
+### General tips
+- If you don't know anything about the options, it's best to leave them as default.
+- **DO NOT** tab out of the app or lock the screen(*) while the app is patching or syncing. Your device
+  might terminate the app to save resources, which might lead to data corruption.
+- Backups are disabled for everything except master.mdb by default due to storage space concerns. If you want
+  to be able to restore the original files later, remember to turn it on manually for each patcher. Note
+  that it will take quite a bit of space with the story patcher.
+- Be patient while the story patcher is running. It's gonna take a while since there are thousands of files that
+  need to be patched.
+
+\* The app will keep the screen on by itself, so your phone won't lock unless you do so manually.
 
 ## Patching the app
 The app can be patched with [Carrotless](https://github.com/LeadRDRK/Carrotless) which brings new
@@ -65,18 +75,6 @@ the app, you can use the game's Data Link feature.
 **Note 2:** The signing key is unique for each installation of UmaPatcher. It is also a self-signed
 key; during installation, Google Play Protect will warn you of installing an untrusted app. **You
 can safely ignore this and tap on More Info -> Install anyways to continue installation.**
-
-### General tips
-- If you don't know anything about the options, it's best to leave them as default.
-- **DO NOT** tab out of the app or lock the screen(*) while the app is patching or syncing. Your device
-might terminate the app to save resources, which might lead to data corruption.
-- Backups are disabled for everything except master.mdb by default due to storage space concerns. If you want
-to be able to restore the original files later, remember to turn it on manually for each patcher. Note
-that it will take quite a bit of space with the story patcher.
-- Be patient while the story patcher is running. It's gonna take a while since there are thousands of files that
-need to be patched.
-
-\* The app will keep the screen on by itself, so your phone won't lock unless you do so manually.
 
 # Updating
 Simply tap on the sync icon on the top right of the Home screen to sync the latest changes from the

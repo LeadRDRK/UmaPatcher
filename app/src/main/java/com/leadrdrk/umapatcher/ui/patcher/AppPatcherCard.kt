@@ -65,7 +65,7 @@ fun AppPatcherCard(navigator: DestinationsNavigator) {
                 leadingIcon = { Icon(Icons.Outlined.Build, stringResource(R.string.patch)) }
             )
             AssistChip(
-                onClick = { AppPatcher.requestDataPermission(context, requestDocumentTree) },
+                onClick = { AppPatcher.requestDataPermission(requestDocumentTree) },
                 label = { Text(stringResource(R.string.install_data)) },
                 leadingIcon = { Icon(painterResource(R.drawable.ic_install_data), null) },
                 enabled = isGameInstalled

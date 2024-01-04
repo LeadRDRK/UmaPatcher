@@ -1,6 +1,7 @@
 package com.leadrdrk.umapatcher.utils
 
 import android.content.Context
+import android.provider.DocumentsContract
 import android.util.Log
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Lifecycle
@@ -38,15 +39,11 @@ fun copyDirectory(context: Context, sourceLocation: File, targetLocation: Docume
         children.forEach { child ->
             val childSourceLocation = File(sourceLocation, child)
             val childTargetLocation = if (childSourceLocation.isDirectory)
-                targetLocation.createDirectory(child) else
-                targetLocation.createFile("*/*", child)
+                targetLocation.createDirectoryOverwrite(child) else
+                targetLocation.createFileOverwrite(child)
             if (childTargetLocation == null) return false
 
-            if (!copyDirectory(
-                    context,
-                    childSourceLocation,
-                    childTargetLocation
-                ))
+            if (!copyDirectory(context, childSourceLocation, childTargetLocation))
                 return false
         }
     } else {

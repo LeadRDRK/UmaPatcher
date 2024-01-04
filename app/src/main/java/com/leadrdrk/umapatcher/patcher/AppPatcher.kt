@@ -18,6 +18,7 @@ import com.leadrdrk.umapatcher.core.dataStore
 import com.leadrdrk.umapatcher.core.getPrefValue
 import com.leadrdrk.umapatcher.utils.bytesToHex
 import com.leadrdrk.umapatcher.utils.copyDirectory
+import com.leadrdrk.umapatcher.utils.createDirectoryOverwrite
 import com.leadrdrk.umapatcher.utils.downloadFileAndDigestSHA1
 import com.leadrdrk.umapatcher.utils.fetchJson
 import com.leadrdrk.umapatcher.utils.repoDir
@@ -347,26 +348,33 @@ class AppPatcher(
             return testDirectory("$MOUNT_INSTALL_PATH/$packageName")
         }
 
-        fun requestDataPermission(context: Context, launcher: ActivityResultLauncher<Uri?>) {
-            val packageInfo = GameChecker.getPackageInfo(context.packageManager) ?: return
-            val packageName = packageInfo.packageName
+        fun requestDataPermission(launcher: ActivityResultLauncher<Uri?>) {
             launcher.launch(
                 DocumentsContract.buildDocumentUri(
                     "com.android.externalstorage.documents",
-                    "primary:Android/data/$packageName"
+                    "primary:Android/media"
                 )
             )
         }
 
         private val installScope = CoroutineScope(Dispatchers.IO)
         @SuppressLint("SdCardPath")
-        fun installData(context: Context, dest: DocumentFile, callback: (Boolean) -> Unit) {
+        fun installData(context: Context, mediaDir: DocumentFile, callback: (Boolean) -> Unit) {
             installScope.launch {
                 val src = context.repoDir.resolve(APP_TRANSLATIONS_PATH)
                 if (!src.exists()) {
                     callback(false)
                     return@launch
                 }
+
+                val packageInfo = GameChecker.getPackageInfo(context.packageManager)!!
+                val packageName = packageInfo.packageName
+                val dest = mediaDir.createDirectoryOverwrite(packageName)
+                if (dest == null) {
+                    callback(false)
+                    return@launch
+                }
+
                 callback(copyDirectory(context, src, dest))
             }
         }

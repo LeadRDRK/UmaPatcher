@@ -1,11 +1,9 @@
 package com.leadrdrk.umapatcher.utils
 
-import android.util.Log
 import androidx.documentfile.provider.DocumentFile
 
 fun DocumentFile.deleteRecursive(): Boolean {
     if (isDirectory) {
-        Log.d("dir", uri.toString())
         listFiles().forEach {
             if (!it.deleteRecursive()) return false
         }

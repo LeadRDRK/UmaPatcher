@@ -119,13 +119,13 @@ fun HomeScreen(navigator: DestinationsNavigator) {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             InstallStatusCard()
+            AppPatcherCard(navigator)
             MdbPatcherCard(navigator, ::showConfirmRestoreDialog)
             StoryPatcherCard(navigator, ::showConfirmRestoreDialog)
             RacePatcherCard(navigator, ::showConfirmRestoreDialog)
             HomePatcherCard(navigator, ::showConfirmRestoreDialog)
             PreviewPatcherCard(navigator, ::showConfirmRestoreDialog)
             LyricsPatcherCard(navigator, ::showConfirmRestoreDialog)
-            AppPatcherCard(navigator)
             Spacer(Modifier.height(8.dp))
             
             if (openDialog) {

@@ -3,6 +3,7 @@ package com.leadrdrk.umapatcher.patcher
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
+import android.util.Log
 import com.leadrdrk.umapatcher.R
 import com.leadrdrk.umapatcher.core.GameChecker
 import com.topjohnwu.superuser.Shell
@@ -42,12 +43,30 @@ abstract class Patcher(
 
     abstract fun run(context: Context): Boolean
 
+    fun safeRun(context: Context): Boolean {
+        return try {
+            run(context)
+        } catch (ex: Exception) {
+            logException(ex)
+            false
+        }
+    }
+
     protected fun log(line: String) {
         onLog(line)
     }
 
     protected fun logAll(lines: Iterable<String>) {
         lines.forEach(onLog)
+    }
+
+    protected fun logException(ex: Exception) {
+        val sw = StringWriter()
+        PrintWriter(sw).use {
+            ex.printStackTrace(it)
+        }
+        log(sw.toString())
+        Log.e("UmaPatcher", "logException", ex)
     }
 
     protected fun saveFile(filename: String, file: File, callback: () -> Unit = {}) {
@@ -74,12 +93,8 @@ abstract class Patcher(
         return try {
             SQLiteDatabase.openDatabase(path, null, flags)
         }
-        catch (e: SQLiteException) {
-            val sw = StringWriter()
-            PrintWriter(sw).use {
-                e.printStackTrace(it)
-            }
-            log(sw.toString())
+        catch (ex: SQLiteException) {
+            logException(ex)
             null
         }
     }

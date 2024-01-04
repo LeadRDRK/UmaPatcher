@@ -87,8 +87,9 @@ class MdbPatcher(
                     reader, Array<MdbTableTranslationDetail>::class.java
                 )
             }
-            catch (_: Exception) {
+            catch (ex: Exception) {
                 log(failedToReadFileStr.format(indexFile.name))
+                logException(ex)
                 return@run false
             }
         }

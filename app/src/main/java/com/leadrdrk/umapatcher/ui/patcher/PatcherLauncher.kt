@@ -35,7 +35,7 @@ object PatcherLauncher {
         withContext(Dispatchers.IO) {
             activity.useKeepScreenOn {
                 patching = true
-                callback(patcher.run(context))
+                callback(patcher.safeRun(context))
                 patching = false
             }
         }

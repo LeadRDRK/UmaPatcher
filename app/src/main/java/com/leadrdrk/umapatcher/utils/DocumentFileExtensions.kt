@@ -1,9 +1,7 @@
 package com.leadrdrk.umapatcher.utils
 
-import android.content.Context
 import android.util.Log
 import androidx.documentfile.provider.DocumentFile
-import java.io.File
 
 fun DocumentFile.deleteRecursive(): Boolean {
     if (isDirectory) {

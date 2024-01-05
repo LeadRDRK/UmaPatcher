@@ -57,7 +57,8 @@ fun MdbPatcherCard(navigator: DestinationsNavigator, showConfirmRestoreDialog: (
                 leadingIcon = { Icon(Icons.Outlined.Refresh, stringResource(R.string.restore)) },
                 enabled = isRestoreAvailable
             )
-        }
+        },
+        rootRequired = true
     ) {
         Text(
             text = stringResource(R.string.patched_prefix) + isPatchedStr,

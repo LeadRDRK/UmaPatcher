@@ -52,7 +52,8 @@ fun AssetsPatcherCardBase(
                 leadingIcon = { Icon(Icons.Outlined.Refresh, stringResource(R.string.restore)) },
                 enabled = isRestoreAvailable
             )
-        }
+        },
+        rootRequired = true
     ) {
         Text(
             text = stringResource(R.string.translation_last_updated_prefix) + translationLastUpdated.value,

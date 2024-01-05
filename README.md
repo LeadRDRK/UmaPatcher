@@ -1,6 +1,8 @@
 # UmaPatcher
 <img align="right" width="96" height="96" src="app/src/main/res/mipmap-xxhdpi/ic_launcher.webp">
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q3QEHRA)
+
 UmaPatcher is an Uma Musume: Pretty Derby translation patching tool for Android. It allows you to
 translate parts of the game into a different language by modifying the game's asset files.
 

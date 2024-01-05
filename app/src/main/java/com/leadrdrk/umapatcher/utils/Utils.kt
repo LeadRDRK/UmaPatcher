@@ -32,7 +32,13 @@ fun deleteRecursive(fileOrDirectory: File, deleteRoot: Boolean = true) {
     if (deleteRoot) fileOrDirectory.delete()
 }
 
-fun copyDirectory(context: Context, sourceLocation: File, targetLocation: DocumentFile): Boolean {
+fun copyDirectory(
+    context: Context,
+    sourceLocation: File,
+    targetLocation: DocumentFile,
+    logParentPaths: String = "",
+    logCallback: (String) -> Unit = {}
+): Boolean {
     if (sourceLocation.isDirectory) {
         val children = sourceLocation.list() ?: return false
         children.forEach { child ->
@@ -42,10 +48,14 @@ fun copyDirectory(context: Context, sourceLocation: File, targetLocation: Docume
                 targetLocation.createFileOverwrite(child)
             if (childTargetLocation == null) return false
 
-            if (!copyDirectory(context, childSourceLocation, childTargetLocation))
+            val newParentPaths = if (childSourceLocation.isDirectory)
+                "$logParentPaths/$child" else logParentPaths
+
+            if (!copyDirectory(context, childSourceLocation, childTargetLocation, newParentPaths, logCallback))
                 return false
         }
     } else {
+        logCallback("$logParentPaths/${sourceLocation.name}")
         try {
             sourceLocation.inputStream().use { input ->
                 context.contentResolver.openOutputStream(targetLocation.uri).use { output ->

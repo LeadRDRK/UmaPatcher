@@ -19,7 +19,7 @@
     <string name="home_patcher_label">Home dialog</string>
     <string name="preview_patcher_label">Preview</string>
     <string name="lyrics_patcher_label">Lyrics</string>
-    <string name="app_patcher_label">App (UI text, etc.)</string>
+    <string name="app_patcher_label">App (UI text, master.mdb)</string>
     <string name="patch">Patch</string>
     <string name="restore">Restore</string>
     <string name="patched_prefix">"Patched: "</string>
@@ -81,6 +81,8 @@
     <string name="failed_to_copy_file">Failed to copy file: %s</string>
     <string name="invalid_file_skip">Invalid file: \"%s\". Skipping.</string>
     <string name="failed_to_create_dir">Failed to create directory: %s</string>
+    <string name="failed_to_copy_dir">Failed to copy directory: %s</string>
+    <string name="failed_to_open_dir">Failed to open directory: %s</string>
     <string name="copying_file">Copying file: %s</string>
     <string name="processing_file">Processing file: %s</string>
     <string name="installing">Installing</string>
@@ -130,6 +132,7 @@
     <string name="mount">Mount</string>
     <string name="unmount">Unmount</string>
     <string name="install_data">Install data</string>
+    <string name="allow_data_access_notice">Please allow the app to access Android/media</string>
 
     <!-- Other -->
     <string name="syncing">Syncing...</string>

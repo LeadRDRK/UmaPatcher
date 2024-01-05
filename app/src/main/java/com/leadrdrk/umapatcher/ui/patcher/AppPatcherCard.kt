@@ -37,19 +37,12 @@ fun AppPatcherCard(navigator: DestinationsNavigator) {
         ActivityResultContracts.OpenDocumentTree()
     ) { result ->
         if (result != null) {
-            context.showToast(context.getString(
-                R.string.installing
-            ), Toast.LENGTH_SHORT)
-
-            val documentFile = DocumentFile.fromTreeUri(context, result)
-                ?: return@rememberLauncherForActivityResult
-
-            AppPatcher.installData(context, documentFile) { success ->
-                context.showToast(context.getString(
-                    if (success) R.string.install_completed
-                    else R.string.install_failed
-                ), Toast.LENGTH_SHORT)
-            }
+            PatcherLauncher.launch(context, navigator,
+                AppPatcher(
+                    fileUri = result,
+                    runInstallData = true
+                )
+            )
         }
     }
 
@@ -65,7 +58,10 @@ fun AppPatcherCard(navigator: DestinationsNavigator) {
                 leadingIcon = { Icon(Icons.Outlined.Build, stringResource(R.string.patch)) }
             )
             AssistChip(
-                onClick = { AppPatcher.requestDataPermission(requestDocumentTree) },
+                onClick = {
+                    context.showToast(context.getString(R.string.allow_data_access_notice), Toast.LENGTH_LONG)
+                    AppPatcher.requestDataPermission(requestDocumentTree)
+                },
                 label = { Text(stringResource(R.string.install_data)) },
                 leadingIcon = { Icon(painterResource(R.drawable.ic_install_data), null) },
                 enabled = isGameInstalled

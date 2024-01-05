@@ -45,12 +45,15 @@ private const val MOUNT_INSTALL_PATH = "/data/adb/umapatcher"
 
 class AppPatcher(
     private val fileUri: Uri? = null,
-    private val mountInstall: Boolean = true
+    private val mountInstall: Boolean = true,
+    private val runInstallData: Boolean = false
 ): Patcher() {
     override fun run(context: Context): Boolean {
-        if (mountInstall && !isDirectInstallAllowed(context)) {
+        if (runInstallData)
+            return installData(context)
+
+        if (mountInstall && !isDirectInstallAllowed(context))
             return false
-        }
 
         /* Download and keep Carrotless up to date */
         val libVer = runBlocking { syncLibraries(context) } ?: return false
@@ -309,6 +312,38 @@ class AppPatcher(
         am force-stop $packageName
     """.trimIndent()
 
+    @SuppressLint("SdCardPath")
+    fun installData(context: Context): Boolean {
+        val mediaDir = DocumentFile.fromTreeUri(context, fileUri!!)
+        if (mediaDir == null) {
+            log(context.getString(R.string.failed_to_open_dir).format("Android/media"))
+            return false
+        }
+
+        val src = context.repoDir.resolve(APP_TRANSLATIONS_PATH)
+        if (!src.exists()) {
+            log(context.getString(R.string.translation_dir_not_exist))
+            return false
+        }
+
+        val packageInfo = GameChecker.getPackageInfo(context.packageManager)!!
+        val packageName = packageInfo.packageName
+        val dest = mediaDir.createDirectoryOverwrite(packageName)
+        if (dest == null) {
+            log(context.getString(R.string.failed_to_create_dir).format(packageName))
+            return false
+        }
+
+        val success = copyDirectory(context, src, dest) {
+            log(it)
+        }
+        if (!success) log(
+            context.getString(R.string.failed_to_copy_dir).format(APP_TRANSLATIONS_PATH)
+        )
+
+        return success
+    }
+
     companion object {
         const val APP_TRANSLATIONS_PATH = "localify"
 
@@ -355,28 +390,6 @@ class AppPatcher(
                     "primary:Android/media"
                 )
             )
-        }
-
-        private val installScope = CoroutineScope(Dispatchers.IO)
-        @SuppressLint("SdCardPath")
-        fun installData(context: Context, mediaDir: DocumentFile, callback: (Boolean) -> Unit) {
-            installScope.launch {
-                val src = context.repoDir.resolve(APP_TRANSLATIONS_PATH)
-                if (!src.exists()) {
-                    callback(false)
-                    return@launch
-                }
-
-                val packageInfo = GameChecker.getPackageInfo(context.packageManager)!!
-                val packageName = packageInfo.packageName
-                val dest = mediaDir.createDirectoryOverwrite(packageName)
-                if (dest == null) {
-                    callback(false)
-                    return@launch
-                }
-
-                callback(copyDirectory(context, src, dest))
-            }
         }
     }
 }

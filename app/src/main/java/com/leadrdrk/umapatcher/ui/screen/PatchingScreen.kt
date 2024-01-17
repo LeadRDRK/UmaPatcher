@@ -107,8 +107,8 @@ fun PatchingScreen(navigator: DestinationsNavigator) {
                     }
                 }
             }
-            currentTask = completedStr
             sfCallback(true)
+            currentTask = completedStr
             sfFile = null
         }
     }

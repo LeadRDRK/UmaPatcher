@@ -9,7 +9,6 @@ import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.datastore.preferences.core.edit
 import androidx.documentfile.provider.DocumentFile
-import com.iyxan23.zipalignjava.ZipAlign
 import com.leadrdrk.umapatcher.R
 import com.leadrdrk.umapatcher.core.GameChecker
 import com.leadrdrk.umapatcher.core.GitHubReleases
@@ -21,15 +20,18 @@ import com.leadrdrk.umapatcher.utils.copyDirectory
 import com.leadrdrk.umapatcher.utils.createDirectoryOverwrite
 import com.leadrdrk.umapatcher.utils.downloadFileAndDigestSHA1
 import com.leadrdrk.umapatcher.utils.fetchJson
+import com.leadrdrk.umapatcher.utils.hasDirectory
 import com.leadrdrk.umapatcher.utils.repoDir
 import com.leadrdrk.umapatcher.utils.workDir
+import com.reandroid.archive.ArchiveFile
+import com.reandroid.archive.writer.ApkFileWriter
+import com.reandroid.archive.writer.ZipAligner
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.runBlocking
 import net.lingala.zip4j.ZipFile
 import net.lingala.zip4j.model.ZipParameters
 import java.io.File
 import java.io.IOException
-import java.io.RandomAccessFile
 import java.net.URL
 
 private const val LIBS_REPO_PATH = "LeadRDRK/Carrotless"
@@ -37,6 +39,10 @@ private const val ARMV8A_LIB_NAME = "libmain-arm64-v8a.so"
 private const val ARMV7A_LIB_NAME = "libmain-armeabi-v7a.so"
 private const val ARMV8A_LIB_DIR = "lib/arm64-v8a"
 private const val ARMV7A_LIB_DIR = "lib/armeabi-v7a"
+private const val ARMV8A_LIB_PATH = "$ARMV8A_LIB_DIR/libmain.so"
+private const val ARMV7A_LIB_PATH  = "$ARMV7A_LIB_DIR/libmain.so"
+private const val ARMV8A_LIB_ORIG_PATH = "$ARMV8A_LIB_DIR/libmain_orig.so"
+private const val ARMV7A_LIB_ORIG_PATH = "$ARMV7A_LIB_DIR/libmain_orig.so"
 
 private const val MOUNT_INSTALL_PATH = "/data/adb/umapatcher"
 
@@ -106,37 +112,100 @@ class AppPatcher(
             ZipFile(apkFile).use { zip ->
                 if (!zip.isValidZipFile) throw IOException()
 
-                val armv8LibPath = "$ARMV8A_LIB_DIR/libmain.so"
-                val armv7LibPath = "$ARMV7A_LIB_DIR/libmain.so"
-                val armv8LibNewPath = "$ARMV8A_LIB_DIR/libmain_orig.so"
-                val armv7LibNewPath = "$ARMV7A_LIB_DIR/libmain_orig.so"
+                if (zip.hasDirectory("lib/")) {
+                    if (zip.getFileHeader(ARMV8A_LIB_ORIG_PATH) == null &&
+                        zip.getFileHeader(ARMV8A_LIB_PATH) != null) {
+                        log(ARMV8A_LIB_ORIG_PATH)
+                        zip.renameFile(ARMV8A_LIB_PATH, ARMV8A_LIB_ORIG_PATH)
+                    }
+                    progress = 1 / 4f
 
-                if (zip.getFileHeader(armv8LibNewPath) == null) {
-                    log(armv8LibNewPath)
-                    zip.renameFile(armv8LibPath, armv8LibNewPath)
+                    if (zip.getFileHeader(ARMV7A_LIB_ORIG_PATH) == null &&
+                        zip.getFileHeader(ARMV7A_LIB_PATH) != null) {
+                        log(ARMV7A_LIB_ORIG_PATH)
+                        zip.renameFile(ARMV7A_LIB_PATH, ARMV7A_LIB_ORIG_PATH)
+                    }
+                    progress = 2 / 4f
                 }
-                progress = 1 / 4f
+                else {
+                    // Missing lib directory; try to add files from system's cached libs
+                    if (packageInfo == null) {
+                        log(context.getString(R.string.apk_file_missing_lib))
+                        apkFile.delete()
+                        return false
+                    }
 
-                if (zip.getFileHeader(armv7LibNewPath) == null) {
-                    log(armv7LibNewPath)
-                    zip.renameFile(armv7LibPath, armv7LibNewPath)
+                    val appApkDir = File(packageInfo!!.applicationInfo.publicSourceDir).parentFile!!
+                    val armv8LibDir = appApkDir.resolve("lib/arm64")
+                    val armv7LibDir = appApkDir.resolve("lib/arm")
+
+                    val sysLibDir: File
+                    val rootFolderName: String
+                    val libOrigPath: String
+                    if (armv8LibDir.exists()) {
+                        sysLibDir = armv8LibDir
+                        rootFolderName = "$ARMV8A_LIB_DIR/"
+                        libOrigPath = ARMV8A_LIB_ORIG_PATH
+                    }
+                    else if (armv7LibDir.exists()) {
+                        sysLibDir = armv7LibDir
+                        rootFolderName = "$ARMV7A_LIB_DIR/"
+                        libOrigPath = ARMV7A_LIB_ORIG_PATH
+                    }
+                    else {
+                        log(context.getString(R.string.apk_file_missing_lib))
+                        apkFile.delete()
+                        return false
+                    }
+
+                    log(sysLibDir.path)
+                    val files = getLibDirFiles(sysLibDir)
+                    zip.addFiles(files, ZipParameters().also {
+                        it.isIncludeRootFolder = true
+                        it.rootFolderNameInZip = rootFolderName
+                    })
+                    progress = 1 / 4f
+                    // Don't add orig lib if it already exists
+                    val srcLib = sysLibDir.resolve("libmain.so")
+                    val origLib = sysLibDir.resolve("libmain_orig.so")
+                    if (!origLib.exists()) {
+                        log(libOrigPath)
+                        zip.addFile(srcLib, ZipParameters().also {
+                            it.fileNameInZip = libOrigPath
+                        })
+                    }
+                    progress = 2 / 4f
                 }
-                progress = 2 / 4f
 
-                log(armv8LibPath)
-                val armv8Param = ZipParameters().also { it.fileNameInZip = armv8LibPath }
-                zip.addFile(armv8Lib, armv8Param)
+                var patched = false
+
+                // Orig lib must exist for patch lib to be functional
+                if (zip.getFileHeader(ARMV8A_LIB_ORIG_PATH) != null) {
+                    log(ARMV8A_LIB_PATH)
+                    val armv8Param = ZipParameters().also { it.fileNameInZip = ARMV8A_LIB_PATH }
+                    zip.addFile(armv8Lib, armv8Param)
+                    patched = true
+                }
                 progress = 3 / 4f
 
-                log(armv7LibPath)
-                val armv7Param = ZipParameters().also { it.fileNameInZip = armv7LibPath }
-                zip.addFile(armv7Lib, armv7Param)
+                if (zip.getFileHeader(ARMV7A_LIB_ORIG_PATH) != null) {
+                    log(ARMV7A_LIB_PATH)
+                    val armv7Param = ZipParameters().also { it.fileNameInZip = ARMV7A_LIB_PATH }
+                    zip.addFile(armv7Lib, armv7Param)
+                    patched = true
+                }
                 progress = 1f
+
+                // No patch libs were installed
+                if (!patched) {
+                    log(context.getString(R.string.apk_file_missing_lib))
+                    apkFile.delete()
+                    return false
+                }
             }
         }
         catch (ex: Exception) {
-            Log.e("AppPatcher", "Exception", ex)
-            log(context.getString(R.string.failed_to_patch_apk_file).format(ex.javaClass.name))
+            logException(ex)
             apkFile.delete()
             return false
         }
@@ -147,7 +216,10 @@ class AppPatcher(
 
         val alignedApkFile = context.workDir.resolve("base-aligned.apk")
         alignedApkFile.outputStream().use { output ->
-            ZipAlign.alignZip(RandomAccessFile(apkFile, "r"), output)
+            val archiveFile = ArchiveFile(apkFile)
+            val writer = ApkFileWriter(alignedApkFile, archiveFile.inputSources)
+            writer.zipAligner = ZipAligner.apkAligner()
+            writer.write()
         }
         apkFile.delete()
 
@@ -213,6 +285,11 @@ class AppPatcher(
 
         return true
     }
+
+    private fun getLibDirFiles(libDir: File) =
+        libDir.walk().filter {
+            !it.isDirectory && it.name != "libmain.so"
+        }.toList()
 
     private fun getAssetDownloadUrl(assets: List<Map<String, Any>>, name: String) =
         assets.find { it["name"] as String == name }?.get("browser_download_url") as String?

@@ -6,6 +6,7 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.google.gson.Gson
+import net.lingala.zip4j.ZipFile
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -15,7 +16,6 @@ import java.security.MessageDigest
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
 
 fun safeNavigate(lifecycleOwner: LifecycleOwner, callback: () -> Unit) {
     val currentState = lifecycleOwner.lifecycle.currentState
@@ -149,4 +149,13 @@ fun bytesToHex(bytes: ByteArray): String {
         hexChars[j * 2 + 1] = HEX_ARRAY[v and 0x0F]
     }
     return String(hexChars)
+}
+
+fun ZipFile.hasDirectory(dir: String): Boolean {
+    fileHeaders.forEach { it ->
+        if (it.fileName.startsWith(dir)) {
+            return true
+        }
+    }
+    return false
 }

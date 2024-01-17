@@ -83,9 +83,9 @@ dependencies {
     implementation 'com.github.topjohnwu.libsu:core:5.2.2'
     implementation 'org.lz4:lz4-java:1.8.0'
     implementation 'net.lingala.zip4j:zip4j:2.11.5'
-    implementation files('libs/zipalign-java-1.0.0.jar')
-    implementation 'com.android.tools.build:apksig:8.2.0'
+    implementation 'com.android.tools.build:apksig:8.2.1'
     implementation 'org.bouncycastle:bcpkix-jdk18on:1.77'
+    implementation 'io.github.reandroid:ARSCLib:1.2.4'
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"

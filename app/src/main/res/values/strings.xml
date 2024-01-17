@@ -117,7 +117,6 @@
     <string name="using_app_lib_ver">Using Carrotless %s</string>
     <string name="corrupted_file_abort_download">Corrupted file detected, aborting download</string>
     <string name="patching_apk_file">Patching APK file</string>
-    <string name="failed_to_patch_apk_file">Failed to patch APK file: %s</string>
     <string name="aligning_apk_file">Aligning APK file</string>
     <string name="signing_apk_file">Signing APK file</string>
     <string name="unmounting_apk_file">Unmounting APK file</string>
@@ -133,6 +132,7 @@
     <string name="unmount">Unmount</string>
     <string name="install_data">Install data</string>
     <string name="allow_data_access_notice">Please allow the app to access Android/media</string>
+    <string name="apk_file_missing_lib">Invalid or incomplete APK file (missing native libraries)</string>
 
     <!-- Other -->
     <string name="syncing">Syncing...</string>

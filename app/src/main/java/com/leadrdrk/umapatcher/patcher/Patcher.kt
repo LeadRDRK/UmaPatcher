@@ -16,7 +16,7 @@ abstract class Patcher(
     private var onLog: (String) -> Unit = {},
     private var onProgress: (Float) -> Unit = {},
     private var onTask: (String) -> Unit = {},
-    private var onSaveFile: (String, File, () -> Unit) -> Unit = { _: String, _: File, _: () -> Unit -> }
+    private var onSaveFile: (String, File, (Boolean) -> Unit) -> Unit = { _: String, _: File, _: (Boolean) -> Unit -> }
 ) {
     var progress: Float = 0f
         set(value) {
@@ -34,7 +34,7 @@ abstract class Patcher(
         onLog: (String) -> Unit = {},
         onProgress: (Float) -> Unit = {},
         onTask: (String) -> Unit = {},
-        onSaveFile: (String, File, () -> Unit) -> Unit
+        onSaveFile: (String, File, (Boolean) -> Unit) -> Unit
     ) {
         this.onLog = onLog
         this.onProgress = onProgress
@@ -70,7 +70,7 @@ abstract class Patcher(
         Log.e("UmaPatcher", "logException", ex)
     }
 
-    protected fun saveFile(filename: String, file: File, callback: () -> Unit = {}) {
+    protected fun saveFile(filename: String, file: File, callback: (Boolean) -> Unit = {}) {
         onSaveFile(filename, file, callback)
     }
 

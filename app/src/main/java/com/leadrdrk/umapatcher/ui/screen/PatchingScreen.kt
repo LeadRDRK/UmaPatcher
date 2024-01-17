@@ -44,6 +44,7 @@ import com.leadrdrk.umapatcher.git.GitRepo
 import com.leadrdrk.umapatcher.ui.component.BackButton
 import com.leadrdrk.umapatcher.ui.component.TopBar
 import com.leadrdrk.umapatcher.ui.patcher.PatcherLauncher
+import com.leadrdrk.umapatcher.utils.copyTo
 import com.leadrdrk.umapatcher.utils.safeNavigate
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -79,27 +80,40 @@ fun PatchingScreen(navigator: DestinationsNavigator) {
 
     val coroutineScope = rememberCoroutineScope()
     var sfFile by remember { mutableStateOf<File?>(null) }
-    var sfCallback by remember { mutableStateOf({}) }
+    var sfCallback: (Boolean) -> Unit by remember { mutableStateOf({}) }
     val sfLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         val uri = it.data?.data
         if (uri == null) {
-            sfCallback()
+            sfCallback(false)
+            sfFile = null
             return@rememberLauncherForActivityResult
         }
 
         coroutineScope.launch(Dispatchers.IO) {
             context.contentResolver.openOutputStream(uri).use { output ->
-                if (output == null) return@use
-                sfFile!!.inputStream().use { input ->
-                    input.copyTo(output)
+                if (output == null) {
+                    sfCallback(false)
+                    sfFile = null
+                    return@launch
+                }
+
+                val file = sfFile!!
+                val length = file.length().toFloat()
+                currentTask = context.getString(R.string.copying_file).format(file.name)
+                progress = 0f
+                file.inputStream().use { input ->
+                    input.copyTo(output) { current ->
+                        progress = current / length
+                    }
                 }
             }
-            sfCallback()
+            currentTask = completedStr
+            sfCallback(true)
             sfFile = null
         }
     }
 
-    fun onSaveFile(filename: String, file: File, callback: () -> Unit = {}) {
+    fun onSaveFile(filename: String, file: File, callback: (Boolean) -> Unit = {}) {
         sfFile = file
         sfCallback = callback
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)

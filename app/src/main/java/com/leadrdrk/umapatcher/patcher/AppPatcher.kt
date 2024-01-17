@@ -275,9 +275,12 @@ class AppPatcher(
             alignedApkFile.delete()
 
             task = context.getString(R.string.installing)
-            saveFile("patched.apk", signedApkFile) {
+            saveFile("patched.apk", signedApkFile) { success ->
                 signedApkFile.delete()
-                log(context.getString(R.string.install_completed))
+                log(
+                    if (success) context.getString(R.string.install_completed)
+                    else context.getString(R.string.install_failed)
+                )
             }
         }
 

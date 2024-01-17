@@ -180,9 +180,12 @@ class MdbPatcher(
             )
         }
         else {
-            saveFile("master.mdb", mdbFile) {
+            saveFile("master.mdb", mdbFile) { success ->
                 mdbFile.delete()
-                log(context.getString(R.string.install_completed))
+                log(
+                    if (success) context.getString(R.string.install_completed)
+                    else context.getString(R.string.install_failed)
+                )
             }
         }
 

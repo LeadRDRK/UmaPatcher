@@ -213,12 +213,10 @@ class AppPatcher(
         task = context.getString(R.string.aligning_apk_file)
 
         val alignedApkFile = context.workDir.resolve("base-aligned.apk")
-        alignedApkFile.outputStream().use { output ->
-            val archiveFile = ArchiveFile(apkFile)
-            val writer = ApkFileWriter(alignedApkFile, archiveFile.inputSources)
-            writer.zipAligner = ZipAligner.apkAligner()
-            writer.write()
-        }
+        val archiveFile = ArchiveFile(apkFile)
+        val writer = ApkFileWriter(alignedApkFile, archiveFile.inputSources)
+        writer.zipAligner = ZipAligner.apkAligner()
+        writer.write()
         apkFile.delete()
 
         /* Install */

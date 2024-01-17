@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteException
 import android.util.Log
 import com.leadrdrk.umapatcher.R
 import com.leadrdrk.umapatcher.core.GameChecker
+import com.leadrdrk.umapatcher.utils.copyTo
 import com.topjohnwu.superuser.Shell
 import java.io.File
 import java.io.PrintWriter
@@ -71,6 +72,17 @@ abstract class Patcher(
 
     protected fun saveFile(filename: String, file: File, callback: () -> Unit = {}) {
         onSaveFile(filename, file, callback)
+    }
+
+    protected fun copyFileProgress(srcFile: File, dstFile: File) {
+        srcFile.inputStream().use { input ->
+            dstFile.outputStream().use { output ->
+                val length = srcFile.length().toFloat()
+                input.copyTo(output) { current ->
+                    progress = current / length
+                }
+            }
+        }
     }
 
     protected fun isDirectInstallAllowed(context: Context): Boolean {

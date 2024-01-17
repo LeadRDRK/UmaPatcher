@@ -17,6 +17,7 @@ import com.leadrdrk.umapatcher.core.dataStore
 import com.leadrdrk.umapatcher.core.getPrefValue
 import com.leadrdrk.umapatcher.utils.bytesToHex
 import com.leadrdrk.umapatcher.utils.copyDirectory
+import com.leadrdrk.umapatcher.utils.copyTo
 import com.leadrdrk.umapatcher.utils.createDirectoryOverwrite
 import com.leadrdrk.umapatcher.utils.downloadFileAndDigestSHA1
 import com.leadrdrk.umapatcher.utils.fetchJson
@@ -90,11 +91,7 @@ class AppPatcher(
             packageInfo = GameChecker.getPackageInfo(context.packageManager)!!
             val srcFile = File(packageInfo.applicationInfo.publicSourceDir)
             try {
-                srcFile.inputStream().use { input ->
-                    apkFile.outputStream().use { output ->
-                        input.copyTo(output)
-                    }
-                }
+                copyFileProgress(srcFile, apkFile)
             }
             catch (ex: Exception) {
                 Log.e("AppPatcher", "Exception", ex)
@@ -103,6 +100,7 @@ class AppPatcher(
             }
         }
 
+        progress = -1f
         task = context.getString(R.string.patching_apk_file)
 
         val libsDir = context.filesDir.resolve("libs")
@@ -211,7 +209,7 @@ class AppPatcher(
         }
 
         /* Align APK */
-        progress = 0f
+        progress = -1f
         task = context.getString(R.string.aligning_apk_file)
 
         val alignedApkFile = context.workDir.resolve("base-aligned.apk")

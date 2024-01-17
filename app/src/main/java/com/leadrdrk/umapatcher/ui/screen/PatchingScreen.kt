@@ -61,7 +61,7 @@ fun PatchingScreen(navigator: DestinationsNavigator) {
 
     val log = remember { mutableStateListOf<String>() }
     var currentTask by remember { mutableStateOf(workingStr) }
-    var progress by remember { mutableFloatStateOf(0f) }
+    var progress by remember { mutableFloatStateOf(-1f) }
     var completed by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
@@ -164,6 +164,7 @@ fun PatchingScreen(navigator: DestinationsNavigator) {
         PatcherLauncher.runPatcher(context) { success ->
             completed = true
             log.add(if (success) patchSuccessMsg else patchFailedMsg)
+            progress = 1f
         }
     }
 
@@ -221,15 +222,23 @@ fun PatchingScreen(navigator: DestinationsNavigator) {
                     )
                     Spacer(Modifier.width(16.dp))
                     Text(
-                        text = "${(progress * 100).toInt()}%",
+                        text = if (progress < 0) "¯\\_(ツ)_/¯" else "${(progress * 100).toInt()}%",
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
                 Spacer(Modifier.height(8.dp))
-                LinearProgressIndicator(
-                    progress = progress,
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                if (progress < 0) {
+                    // Indeterminate
+                    LinearProgressIndicator(
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+                else {
+                    LinearProgressIndicator(
+                        progress = progress,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
                 Spacer(Modifier.height(8.dp))
             }
         }

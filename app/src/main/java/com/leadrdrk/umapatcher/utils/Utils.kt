@@ -10,6 +10,8 @@ import net.lingala.zip4j.ZipFile
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.security.MessageDigest
@@ -152,10 +154,22 @@ fun bytesToHex(bytes: ByteArray): String {
 }
 
 fun ZipFile.hasDirectory(dir: String): Boolean {
-    fileHeaders.forEach { it ->
+    fileHeaders.forEach {
         if (it.fileName.startsWith(dir)) {
             return true
         }
     }
     return false
+}
+
+fun InputStream.copyTo(out: OutputStream, onProgress: (currentBytes: Int) -> Unit) {
+    val buffer = ByteArray(524288) // 512KiB
+    var lengthRead: Int
+    var currentBytes = 0
+    while (read(buffer).also { lengthRead = it } > 0) {
+        out.write(buffer, 0, lengthRead)
+        currentBytes += lengthRead
+        onProgress(currentBytes)
+    }
+    out.flush()
 }

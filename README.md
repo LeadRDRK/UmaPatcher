@@ -7,11 +7,8 @@ UmaPatcher is an Uma Musume: Pretty Derby translation patching tool for Android.
 translate parts of the game into a different language by modifying the game's asset files.
 
 # Requirements
-- Any device(*) running Android 7.0 or above.
+- Android 7.0 or above.
 - At least 1.2GB of free space (The app will take around 300MB with the translation files downloaded)
-
-\* For now, most of this app's features require root access. However, app patching does not require
-root can and be used to install UI translations.
 
 # Download
 Download the latest release from the [Releases page](https://github.com/LeadRDRK/UmaPatcher/releases).

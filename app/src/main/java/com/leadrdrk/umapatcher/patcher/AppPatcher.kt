@@ -17,7 +17,6 @@ import com.leadrdrk.umapatcher.core.dataStore
 import com.leadrdrk.umapatcher.core.getPrefValue
 import com.leadrdrk.umapatcher.utils.bytesToHex
 import com.leadrdrk.umapatcher.utils.copyDirectory
-import com.leadrdrk.umapatcher.utils.copyTo
 import com.leadrdrk.umapatcher.utils.createDirectoryOverwrite
 import com.leadrdrk.umapatcher.utils.downloadFileAndDigestSHA1
 import com.leadrdrk.umapatcher.utils.fetchJson
@@ -35,7 +34,7 @@ import java.io.File
 import java.io.IOException
 import java.net.URL
 
-private const val LIBS_REPO_PATH = "LeadRDRK/Carrotless"
+private const val LIBS_REPO_PATH = "Hachimi-Hachimi/Hachimi"
 private const val ARMV8A_LIB_NAME = "libmain-arm64-v8a.so"
 private const val ARMV7A_LIB_NAME = "libmain-armeabi-v7a.so"
 private const val ARMV8A_LIB_DIR = "lib/arm64-v8a"
@@ -49,17 +48,13 @@ private const val MOUNT_INSTALL_PATH = "/data/adb/umapatcher"
 
 class AppPatcher(
     private val fileUri: Uri? = null,
-    private val mountInstall: Boolean = true,
-    private val runInstallData: Boolean = false
+    private val mountInstall: Boolean = true
 ): Patcher() {
     override fun run(context: Context): Boolean {
-        if (runInstallData)
-            return installData(context)
-
         if (mountInstall && !isDirectInstallAllowed(context))
             return false
 
-        /* Download and keep Carrotless up to date */
+        /* Download and keep Hachimi up to date */
         val libVer = runBlocking { syncLibraries(context) } ?: return false
         log(context.getString(R.string.using_app_lib_ver).format(libVer))
 
@@ -385,41 +380,7 @@ class AppPatcher(
         am force-stop $packageName
     """.trimIndent()
 
-    @SuppressLint("SdCardPath")
-    fun installData(context: Context): Boolean {
-        val mediaDir = DocumentFile.fromTreeUri(context, fileUri!!)
-        if (mediaDir == null) {
-            log(context.getString(R.string.failed_to_open_dir).format("Android/media"))
-            return false
-        }
-
-        val src = context.repoDir.resolve(APP_TRANSLATIONS_PATH)
-        if (!src.exists()) {
-            log(context.getString(R.string.translation_dir_not_exist))
-            return false
-        }
-
-        val packageInfo = GameChecker.getPackageInfo(context.packageManager)!!
-        val packageName = packageInfo.packageName
-        val dest = mediaDir.createDirectoryOverwrite(packageName)
-        if (dest == null) {
-            log(context.getString(R.string.failed_to_create_dir).format(packageName))
-            return false
-        }
-
-        val success = copyDirectory(context, src, dest) {
-            log(it)
-        }
-        if (!success) log(
-            context.getString(R.string.failed_to_copy_dir).format(APP_TRANSLATIONS_PATH)
-        )
-
-        return success
-    }
-
     companion object {
-        const val APP_TRANSLATIONS_PATH = "localify"
-
         fun runMountScript(context: Context): Boolean {
             if (!isRootOperationAllowed(context)) return false
             val packageInfo = GameChecker.getPackageInfo(context.packageManager)!!
@@ -454,15 +415,6 @@ class AppPatcher(
             val packageInfo = GameChecker.getPackageInfo(context.packageManager)!!
             val packageName = packageInfo.packageName
             return testDirectory("$MOUNT_INSTALL_PATH/$packageName")
-        }
-
-        fun requestDataPermission(launcher: ActivityResultLauncher<Uri?>) {
-            launcher.launch(
-                DocumentsContract.buildDocumentUri(
-                    "com.android.externalstorage.documents",
-                    "primary:Android/media"
-                )
-            )
         }
     }
 }

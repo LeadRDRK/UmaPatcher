@@ -94,10 +94,6 @@ abstract class Patcher(
             log(context.getString(R.string.root_required))
             return false
         }
-        if (!testDirectory(GameChecker.filesDir.resolve("dat").path)) {
-            log(context.getString(R.string.game_data_not_found))
-            return false
-        }
         return true
     }
 

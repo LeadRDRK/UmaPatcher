@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.leadrdrk.umapatcher.R
-import com.leadrdrk.umapatcher.git.GitRepo
 import com.leadrdrk.umapatcher.ui.component.BackButton
 import com.leadrdrk.umapatcher.ui.component.TopBar
 import com.leadrdrk.umapatcher.ui.patcher.PatcherLauncher
@@ -139,40 +138,11 @@ fun PatchingScreen(navigator: DestinationsNavigator) {
         }
     }
 
-    // Wait for sync if it's syncing when the screen is launched
-    // waitingForSync will only be changed once when syncing finishes the first time
-    val syncing by remember { GitRepo.syncing }
-    var waitingForSync by remember { mutableStateOf(GitRepo.syncing.value) }
-
-    val syncFailedDesc = stringResource(R.string.sync_failed_desc)
-    LaunchedEffect(syncing) {
-        if (!syncing && waitingForSync) {
-            // Check for failed clone
-            if (GitRepo.ready.value) {
-                waitingForSync = false
-            } else {
-                log.add(syncFailedDesc)
-                completed = true
-            }
-        }
-    }
-
-    val initialSyncInfo = stringResource(R.string.initial_sync_info)
-    val waitingForSyncStr = stringResource(R.string.waiting_for_sync)
     val patchSuccessMsg = stringResource(R.string.patch_success_msg)
     val patchFailedMsg = stringResource(R.string.patch_failed_msg)
 
-    LaunchedEffect(waitingForSync) {
+    LaunchedEffect(true) {
         if (PatcherLauncher.patching) return@LaunchedEffect
-        if (waitingForSync) {
-            // Show notice if this is the first sync/clone
-            if (!GitRepo.ready.value) {
-                log.add(initialSyncInfo)
-            }
-            onTask(waitingForSyncStr)
-            return@LaunchedEffect
-        }
-        // Run the patcher
         val patcher = PatcherLauncher.patcher!!
         patcher.setCallbacks(::onLog, ::onProgress, ::onTask, ::onSaveFile)
         PatcherLauncher.runPatcher(context) { success ->

@@ -44,7 +44,6 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.leadrdrk.umapatcher.core.PrefKey
 import com.leadrdrk.umapatcher.core.UpdateChecker
 import com.leadrdrk.umapatcher.core.getPrefValue
-import com.leadrdrk.umapatcher.git.GitRepo
 import com.leadrdrk.umapatcher.ui.component.SimpleOkCancelDialog
 import com.leadrdrk.umapatcher.ui.screen.BottomBarDestination
 import com.leadrdrk.umapatcher.ui.screen.NavGraphs
@@ -88,9 +87,6 @@ class MainActivity : ComponentActivity() {
 
     private fun appInit() {
         requestPermissions()
-        lifecycleScope.launch {
-            gitStartupInit()
-        }
 
         // Init work directory
         workDir.mkdir()
@@ -100,17 +96,6 @@ class MainActivity : ComponentActivity() {
         Shell.getShell { rootInitialized.value = true }
     }
 
-    @SuppressLint("InlinedApi")
-    private suspend fun gitStartupInit() {
-        // Init git repo
-        GitRepo.init(applicationContext)
-
-        // Start syncing (only if the repo is already cloned)
-        if (getPrefValue(PrefKey.SYNC_ON_STARTUP) as Boolean && GitRepo.ready.value) {
-            startRepoSync()
-        }
-    }
-
     private fun requestPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val launcher = registerForActivityResult(
@@ -118,10 +103,6 @@ class MainActivity : ComponentActivity() {
             ) {}
             launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
-    }
-
-    fun startRepoSync() {
-        GitRepo.sync(applicationContext, lifecycleScope)
     }
 
     fun useKeepScreenOn(callback: () -> Unit) {

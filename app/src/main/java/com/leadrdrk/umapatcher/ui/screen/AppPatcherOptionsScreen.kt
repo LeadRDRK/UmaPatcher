@@ -24,7 +24,6 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun AppPatcherOptionsScreen(navigator: DestinationsNavigator) {
-    val context = LocalContext.current
     val installMethod = remember { mutableIntStateOf(0) }
     val apkSource = remember { mutableIntStateOf(0) }
 
@@ -53,7 +52,6 @@ fun AppPatcherOptionsScreen(navigator: DestinationsNavigator) {
         navigator = navigator,
         onConfirm = {
             PatcherLauncher.launch(
-                context,
                 navigator,
                 AppPatcher(
                     fileUri = if (apkSource.intValue == 1) fileUri else null,

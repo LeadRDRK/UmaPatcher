@@ -47,8 +47,6 @@ android {
     packagingOptions {
         resources {
             excludes += "META-INF/*"
-            // for some unknown reason the macOS jni library would get included in the apk
-            excludes += "net/jpountz/**"
         }
     }
     namespace 'com.leadrdrk.umapatcher'
@@ -76,14 +74,10 @@ dependencies {
     ksp 'io.github.raamcosta.compose-destinations:ksp:1.9.55'
     implementation 'com.mikepenz:aboutlibraries-core:10.9.2'
     implementation 'com.mikepenz:aboutlibraries-compose:10.9.2'
-    // Any JGit version newer than 4.7.0 is **EXTREMELY** slow at resolving deltas
-    // https://git.eclipse.org/r/c/jgit/jgit/+/91837
-    implementation 'org.eclipse.jgit:org.eclipse.jgit:4.6.1.201703071140-r'
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.github.topjohnwu.libsu:core:5.2.2'
-    implementation 'org.lz4:lz4-java:1.8.0'
     implementation 'net.lingala.zip4j:zip4j:2.11.5'
-    implementation 'com.android.tools.build:apksig:8.2.1'
+    implementation 'com.android.tools.build:apksig:8.2.2'
     implementation 'org.bouncycastle:bcpkix-jdk18on:1.77'
     implementation 'io.github.reandroid:ARSCLib:1.2.4'
 

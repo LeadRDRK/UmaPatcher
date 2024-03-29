@@ -15,20 +15,12 @@ import kotlinx.coroutines.withContext
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "config")
 
 object PrefKey {
-    val GIT_CLONE_COMPLETED = booleanPreferencesKey("git_clone_completed")
-    val GIT_REMOTE = stringPreferencesKey("git_remote")
-    val GIT_BRANCH = stringPreferencesKey("git_branch")
-    val SYNC_ON_STARTUP = booleanPreferencesKey("sync_on_startup")
     val CHECK_FOR_UPDATES = booleanPreferencesKey("check_for_updates")
     val LAST_UPDATE_CHECK = longPreferencesKey("last_update_check")
     val APP_LIBS_VERSION = stringPreferencesKey("app_libs_version")
 }
 
 val defaultValues = mapOf(
-    Pair(PrefKey.GIT_CLONE_COMPLETED, false),
-    Pair(PrefKey.GIT_REMOTE, "https://github.com/LeadRDRK/umamusu-translate.git"),
-    Pair(PrefKey.GIT_BRANCH, "master"),
-    Pair(PrefKey.SYNC_ON_STARTUP, true),
     Pair(PrefKey.CHECK_FOR_UPDATES, true),
     Pair(PrefKey.LAST_UPDATE_CHECK, 0L),
     Pair(PrefKey.APP_LIBS_VERSION, null)

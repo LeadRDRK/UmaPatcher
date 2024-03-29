@@ -1,9 +1,5 @@
 package com.leadrdrk.umapatcher.ui.screen
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,37 +16,20 @@ import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.leadrdrk.umapatcher.MainActivity
 import com.leadrdrk.umapatcher.R
 import com.leadrdrk.umapatcher.core.GameChecker
-import com.leadrdrk.umapatcher.git.GitRepo
-import com.leadrdrk.umapatcher.ui.component.SimpleOkCancelDialog
 import com.leadrdrk.umapatcher.ui.component.TopBar
 import com.leadrdrk.umapatcher.ui.patcher.AppPatcherCard
-import com.leadrdrk.umapatcher.ui.patcher.HomePatcherCard
-import com.leadrdrk.umapatcher.ui.patcher.LyricsPatcherCard
-import com.leadrdrk.umapatcher.ui.patcher.MdbPatcherCard
-import com.leadrdrk.umapatcher.ui.patcher.PreviewPatcherCard
-import com.leadrdrk.umapatcher.ui.patcher.RacePatcherCard
-import com.leadrdrk.umapatcher.ui.patcher.StoryPatcherCard
-import com.leadrdrk.umapatcher.utils.getActivity
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -59,33 +38,6 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Destination
 @Composable
 fun HomeScreen(navigator: DestinationsNavigator) {
-    val iconRotateAnim = remember { Animatable(0f) }
-    val syncing by remember { GitRepo.syncing }
-    var openDialog by remember { mutableStateOf(false) }
-    var restoreCallback by remember { mutableStateOf({}) }
-    
-    fun showConfirmRestoreDialog(callback: () -> Unit) {
-        restoreCallback = callback
-        openDialog = true
-    }
-
-    LaunchedEffect(syncing) {
-        if (syncing) {
-            iconRotateAnim.animateTo(
-                targetValue = -360f,
-                animationSpec = infiniteRepeatable(
-                    animation = tween(1000, easing = LinearEasing)
-                )
-            )
-        }
-        else {
-            iconRotateAnim.stop()
-            iconRotateAnim.snapTo(0f)
-        }
-    }
-
-    val context = LocalContext.current
-    val activity = context.getActivity() as MainActivity
     Scaffold(
         topBar = {
             TopBar(
@@ -96,17 +48,6 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                         contentDescription = null,
                         modifier = Modifier.size(54.dp)
                     )
-                },
-                actions = {
-                    IconButton(
-                        onClick = { activity.startRepoSync() },
-                    ) {
-                        Icon(
-                            painterResource(R.drawable.ic_sync),
-                            contentDescription = stringResource(R.string.sync_git_repo),
-                            modifier = Modifier.rotate(iconRotateAnim.value)
-                        )
-                    }
                 }
             )
         }
@@ -120,25 +61,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
         ) {
             InstallStatusCard()
             AppPatcherCard(navigator)
-            MdbPatcherCard(navigator, ::showConfirmRestoreDialog)
-            StoryPatcherCard(navigator, ::showConfirmRestoreDialog)
-            RacePatcherCard(navigator, ::showConfirmRestoreDialog)
-            HomePatcherCard(navigator, ::showConfirmRestoreDialog)
-            PreviewPatcherCard(navigator, ::showConfirmRestoreDialog)
-            LyricsPatcherCard(navigator, ::showConfirmRestoreDialog)
             Spacer(Modifier.height(8.dp))
-            
-            if (openDialog) {
-                SimpleOkCancelDialog(
-                    title = stringResource(R.string.confirm),
-                    onClose = { ok ->
-                        openDialog = false
-                        if (ok) restoreCallback()
-                    }
-                ) {
-                    Text(stringResource(R.string.confirm_restore_desc))
-                }
-            }
         }
     }
 }

@@ -30,10 +30,6 @@ import com.ramcosta.composedestinations.annotation.Destination
 fun SettingsScreen() {
     val context = LocalContext.current
     val checkForUpdates = remember { mutableStateOf(false) }
-    val syncOnStartup = remember { mutableStateOf(false) }
-    val gitRemote = remember { mutableStateOf("") }
-    val gitBranch = remember { mutableStateOf("") }
-
     var configRead by remember { mutableStateOf(false) }
 
     @Composable
@@ -48,23 +44,8 @@ fun SettingsScreen() {
         it[PrefKey.CHECK_FOR_UPDATES] = checkForUpdates.value
     }
 
-    PrefUpdateEffect(syncOnStartup.value) {
-        it[PrefKey.SYNC_ON_STARTUP] = syncOnStartup.value
-    }
-
-    PrefUpdateEffect(gitRemote.value) {
-        it[PrefKey.GIT_REMOTE] = gitRemote.value
-    }
-
-    PrefUpdateEffect(gitBranch.value) {
-        it[PrefKey.GIT_BRANCH] = gitBranch.value
-    }
-
     LaunchedEffect(true) {
         checkForUpdates.value = context.getPrefValue(PrefKey.CHECK_FOR_UPDATES) as Boolean
-        syncOnStartup.value = context.getPrefValue(PrefKey.SYNC_ON_STARTUP) as Boolean
-        gitRemote.value = context.getPrefValue(PrefKey.GIT_REMOTE) as String
-        gitBranch.value = context.getPrefValue(PrefKey.GIT_BRANCH) as String
         configRead = true
     }
 
@@ -84,19 +65,6 @@ fun SettingsScreen() {
                 title = stringResource(R.string.check_for_updates),
                 desc = stringResource(R.string.check_for_updates_desc),
                 state = checkForUpdates
-            )
-            BooleanOption(
-                title = stringResource(R.string.sync_on_startup),
-                desc = stringResource(R.string.sync_on_startup_desc),
-                state = syncOnStartup
-            )
-            StringOption(
-                title = stringResource(R.string.git_remote),
-                state = gitRemote
-            )
-            StringOption(
-                title = stringResource(R.string.git_branch),
-                state = gitBranch
             )
         }
     }

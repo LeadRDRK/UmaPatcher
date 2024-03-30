@@ -1,7 +1,6 @@
 package com.leadrdrk.umapatcher
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
@@ -36,14 +35,11 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.leadrdrk.umapatcher.core.PrefKey
 import com.leadrdrk.umapatcher.core.UpdateChecker
-import com.leadrdrk.umapatcher.core.getPrefValue
 import com.leadrdrk.umapatcher.ui.component.SimpleOkCancelDialog
 import com.leadrdrk.umapatcher.ui.screen.BottomBarDestination
 import com.leadrdrk.umapatcher.ui.screen.NavGraphs
@@ -57,7 +53,6 @@ import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 import com.ramcosta.composedestinations.navigation.popBackStack
 import com.ramcosta.composedestinations.utils.isRouteOnBackStackAsState
 import com.topjohnwu.superuser.Shell
-import kotlinx.coroutines.launch
 
 private val rootInitialized = mutableStateOf(false)
 

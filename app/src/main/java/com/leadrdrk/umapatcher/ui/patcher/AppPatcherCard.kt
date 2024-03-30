@@ -2,7 +2,6 @@ package com.leadrdrk.umapatcher.ui.patcher
 
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.icons.Icons
@@ -21,11 +20,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.leadrdrk.umapatcher.R
-import com.leadrdrk.umapatcher.core.GameChecker
 import com.leadrdrk.umapatcher.patcher.AppPatcher
 import com.leadrdrk.umapatcher.ui.component.RadioGroupOption
-import com.leadrdrk.umapatcher.ui.screen.destinations.AppPatcherOptionsScreenDestination
-import com.leadrdrk.umapatcher.utils.showToast
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable

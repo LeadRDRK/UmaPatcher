@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.net.Uri
-import android.provider.DocumentsContract
 import android.util.Log
-import androidx.activity.result.ActivityResultLauncher
 import androidx.datastore.preferences.core.edit
-import androidx.documentfile.provider.DocumentFile
 import com.leadrdrk.umapatcher.R
 import com.leadrdrk.umapatcher.core.GameChecker
 import com.leadrdrk.umapatcher.core.GitHubReleases
@@ -16,12 +13,9 @@ import com.leadrdrk.umapatcher.core.PrefKey
 import com.leadrdrk.umapatcher.core.dataStore
 import com.leadrdrk.umapatcher.core.getPrefValue
 import com.leadrdrk.umapatcher.utils.bytesToHex
-import com.leadrdrk.umapatcher.utils.copyDirectory
-import com.leadrdrk.umapatcher.utils.createDirectoryOverwrite
 import com.leadrdrk.umapatcher.utils.downloadFileAndDigestSHA1
 import com.leadrdrk.umapatcher.utils.fetchJson
 import com.leadrdrk.umapatcher.utils.hasDirectory
-import com.leadrdrk.umapatcher.utils.repoDir
 import com.leadrdrk.umapatcher.utils.workDir
 import com.reandroid.archive.ArchiveFile
 import com.reandroid.archive.writer.ApkFileWriter

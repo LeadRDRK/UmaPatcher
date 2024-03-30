@@ -1,18 +1,13 @@
 package com.leadrdrk.umapatcher.core
 
-import android.annotation.SuppressLint
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import java.io.File
 
 object GameChecker {
     private const val PACKAGE_NAME_JP = "jp.co.cygames.umamusume"
 
     private var _packageInfo: PackageInfo? = null
     private var _uid: Int? = null
-    val filesDir: File
-        @SuppressLint("SdCardPath")
-        get() = File("/data/data/${_packageInfo!!.packageName}/files")
 
     private fun populatePackageInfo(pm: PackageManager): Boolean {
         return try {

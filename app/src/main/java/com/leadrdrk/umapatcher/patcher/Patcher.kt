@@ -1,8 +1,6 @@
 package com.leadrdrk.umapatcher.patcher
 
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteException
 import android.util.Log
 import com.leadrdrk.umapatcher.R
 import com.leadrdrk.umapatcher.core.GameChecker
@@ -95,15 +93,5 @@ abstract class Patcher(
             return false
         }
         return true
-    }
-
-    protected fun openDatabase(path: String, flags: Int = SQLiteDatabase.OPEN_READWRITE): SQLiteDatabase? {
-        return try {
-            SQLiteDatabase.openDatabase(path, null, flags)
-        }
-        catch (ex: SQLiteException) {
-            logException(ex)
-            null
-        }
     }
 }

@@ -21,7 +21,6 @@ import com.leadrdrk.umapatcher.core.PrefKey
 import com.leadrdrk.umapatcher.core.dataStore
 import com.leadrdrk.umapatcher.core.getPrefValue
 import com.leadrdrk.umapatcher.ui.component.BooleanOption
-import com.leadrdrk.umapatcher.ui.component.StringOption
 import com.leadrdrk.umapatcher.ui.component.TopBar
 import com.ramcosta.composedestinations.annotation.Destination
 

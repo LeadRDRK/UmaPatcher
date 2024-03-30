@@ -65,7 +65,7 @@ fun AppPatcherCard(navigator: DestinationsNavigator) {
                         navigator,
                         AppPatcher(
                             fileUri = if (apkSource.intValue == 1) fileUri else null,
-                            mountInstall = installMethod.intValue == 0
+                            mountInstall = installMethod.intValue == 1
                         )
                     )
                 },
@@ -111,8 +111,8 @@ fun AppPatcherCard(navigator: DestinationsNavigator) {
             title = stringResource(R.string.install_method),
             desc = stringResource(R.string.install_method_desc),
             choices = arrayOf(
-                stringResource(R.string.direct_install),
                 stringResource(R.string.save_patched_apk_file),
+                stringResource(R.string.direct_install)
             ),
             state = installMethod
         )

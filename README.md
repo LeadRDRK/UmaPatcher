@@ -1,6 +1,7 @@
 # UmaPatcher
 <img align="right" width="96" height="96" src="app/src/main/res/mipmap-xxhdpi/ic_launcher.webp">
 
+[![Discord server](https://dcbadge.limes.pink/api/server/https://discord.gg/BVEt5FcxEn)](https://discord.gg/BVEt5FcxEn)
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q3QEHRA)
 
 UmaPatcher is an UM:PD Hachimi mod patching tool for Android. Its main purpose is to provide you

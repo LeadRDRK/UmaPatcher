@@ -10,7 +10,7 @@ with translation patches within the game, among other features.
 For more information, please check out [Hachimi](https://github.com/Hachimi-Hachimi/Hachimi).
 
 # Requirements
-- Android 7.0 or above (***EXCEPT*** for Android 11, see [Hachimi#3](https://github.com/Hachimi-Hachimi/Hachimi/issues/3))
+- Android 7.0 or above
 
 # Download
 Download the latest release from the [Releases page](https://github.com/LeadRDRK/UmaPatcher/releases).

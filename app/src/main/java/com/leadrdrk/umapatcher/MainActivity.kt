@@ -43,6 +43,7 @@ import com.leadrdrk.umapatcher.ui.screen.NavGraphs
 import com.leadrdrk.umapatcher.ui.screen.destinations.PatchingScreenDestination
 import com.leadrdrk.umapatcher.ui.theme.UmaPatcherTheme
 import com.leadrdrk.umapatcher.utils.deleteRecursive
+import com.leadrdrk.umapatcher.utils.repoDir
 import com.leadrdrk.umapatcher.utils.workDir
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.animations.defaults.RootNavGraphDefaultAnimations
@@ -81,6 +82,9 @@ class MainActivity : ComponentActivity() {
         // Init work directory
         workDir.mkdir()
         deleteRecursive(workDir, deleteRoot = false)
+
+        // Remove legacy repo directory (if it exists)
+        deleteRecursive(repoDir, deleteRoot = true)
 
         // Request root permissions
         Shell.getShell { rootInitialized.value = true }

@@ -7,7 +7,7 @@
     <!-- Home -->
     <string name="game_installed">Game is installed</string>
     <string name="game_not_installed">Game is not installed</string>
-    <string name="game_not_installed_info">Download an APK file and start patching!</string>
+    <string name="game_not_installed_info">Some features might not be available.</string>
     <string name="package_name_prefix">"Package: "</string>
     <string name="version_name_prefix">"Version: "</string>
 
@@ -15,10 +15,6 @@
     <string name="patch">Patch</string>
 
     <!-- Settings -->
-    <string name="sync_on_startup">Sync translation repo on startup</string>
-    <string name="sync_on_startup_desc">Keep the translation repo up to date by syncing it when the app starts.</string>
-    <string name="git_remote">Git remote</string>
-    <string name="git_branch">Git branch</string>
     <string name="check_for_updates_desc">Occasionally check for updates when the app starts.</string>
     <string name="export_signing_key">Export signing key</string>
     <string name="export_signing_key_desc">Export the BKS keystore used to sign APK files.</string>
@@ -36,8 +32,6 @@
     <string name="support_me">Support me on Ko-fi</string>
 
     <!-- Patcher options -->
-    <string name="options">Options</string>
-    <string name="confirm">Confirm</string>
     <string name="install_method">Install method</string>
     <string name="install_method_desc">How you want the patch to be installed.</string>
     <string name="direct_install">Direct install (root required)</string>
@@ -52,25 +46,13 @@
     <string name="completed">Completed</string>
     <string name="patch_success_msg">[Patching successful]</string>
     <string name="patch_failed_msg">[Patching failed]</string>
-    <string name="initial_sync_info">The translation repo is being synced for the first time. This might take a while.</string>
-    <string name="waiting_for_sync">Waiting for sync to complete...</string>
     <string name="direct_install_unavailable">Direct install can only be used when the game is installed.</string>
     <string name="root_required">Root permission is required for this operation.</string>
-    <string name="file_not_found_skip">File not found: \"%s\". Skipping.</string>
     <string name="failed_to_read_file">Failed to read file: %s</string>
-    <string name="failed_to_read_file_skip">Failed to read file: \"%s\". Skipping.</string>
-    <string name="failed_to_copy_file">Failed to copy file: %s</string>
-    <string name="invalid_file_skip">Invalid file: \"%s\". Skipping.</string>
-    <string name="failed_to_create_dir">Failed to create directory: %s</string>
-    <string name="failed_to_copy_dir">Failed to copy directory: %s</string>
-    <string name="failed_to_open_dir">Failed to open directory: %s</string>
     <string name="copying_file">Copying file: %s</string>
-    <string name="processing_file">Processing file: %s</string>
     <string name="installing">Installing</string>
     <string name="install_completed">Install completed</string>
     <string name="install_failed">Install failed</string>
-    <string name="failed_to_list_dir">Failed to list directory: %s</string>
-    <string name="patching_files_n">Patching files (%d/%d)</string>
     <string name="file_saved">File saved.</string>
     <string name="failed_to_save_file">Failed to save file.</string>
 
@@ -85,7 +67,6 @@
     <string name="aligning_apk_file">Aligning APK file</string>
     <string name="signing_apk_file">Signing APK file</string>
     <string name="unmounting_apk_file">Unmounting APK file</string>
-    <string name="copying_localized_data">Copying localized data</string>
     <string name="mount_install_note">
         \n
         ********** NOTE **********\n
@@ -95,12 +76,9 @@
     </string>
     <string name="mount">Mount</string>
     <string name="unmount">Unmount</string>
-    <string name="install_data">Install data</string>
-    <string name="allow_data_access_notice">Please allow the app to access Android/media</string>
     <string name="apk_file_missing_lib">Invalid or incomplete APK file (missing native libraries)</string>
 
     <!-- Other -->
-    <string name="loading">Loading...</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="update_available">Update available</string>

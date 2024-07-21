@@ -12,6 +12,9 @@ val Context.workDir: File
 val Context.repoDir: File
     get() = filesDir.resolve("repo")
 
+val Context.ksFile: File
+    get() = filesDir.resolve("keystore.bks")
+
 fun Context.getActivity(): ComponentActivity? = when (this) {
     is ComponentActivity -> this
     is ContextWrapper -> baseContext.getActivity()

@@ -20,6 +20,13 @@
     <string name="git_remote">Git remote</string>
     <string name="git_branch">Git branch</string>
     <string name="check_for_updates_desc">Occasionally check for updates when the app starts.</string>
+    <string name="export_signing_key">Export signing key</string>
+    <string name="export_signing_key_desc">Export the BKS keystore used to sign APK files.</string>
+    <string name="import_signing_key">Import signing key</string>
+    <string name="import_signing_key_desc">Import a BKS keystore that will be used to sign APK files.</string>
+    <string name="no_keystore_to_export">No keystore to export.</string>
+    <string name="keystore_imported">Keystore imported.</string>
+    <string name="failed_to_import_keystore">Failed to import keystore.</string>
 
     <!-- About -->
     <string name="app_desc">UM:PD Hachimi mod patching tool for Android.</string>
@@ -64,6 +71,8 @@
     <string name="install_failed">Install failed</string>
     <string name="failed_to_list_dir">Failed to list directory: %s</string>
     <string name="patching_files_n">Patching files (%d/%d)</string>
+    <string name="file_saved">File saved.</string>
+    <string name="failed_to_save_file">Failed to save file.</string>
 
     <!-- AppPatcher -->
     <string name="syncing_app_libs">Syncing Hachimi libraries</string>

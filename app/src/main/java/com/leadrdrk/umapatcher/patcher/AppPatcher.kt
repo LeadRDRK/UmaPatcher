@@ -16,6 +16,7 @@ import com.leadrdrk.umapatcher.utils.bytesToHex
 import com.leadrdrk.umapatcher.utils.downloadFileAndDigestSHA1
 import com.leadrdrk.umapatcher.utils.fetchJson
 import com.leadrdrk.umapatcher.utils.hasDirectory
+import com.leadrdrk.umapatcher.utils.ksFile
 import com.leadrdrk.umapatcher.utils.workDir
 import com.reandroid.archive.ArchiveFile
 import com.reandroid.archive.writer.ApkFileWriter
@@ -257,8 +258,7 @@ class AppPatcher(
             task = context.getString(R.string.signing_apk_file)
             val signedApkFile = context.workDir.resolve("base-signed.apk")
             val apkSigner = ApkSigner("UmaPatcher", "securep@ssw0rd816-n")
-            val ksFile = context.filesDir.resolve("keystore.bks")
-            apkSigner.signApk(alignedApkFile, signedApkFile, ksFile)
+            apkSigner.signApk(alignedApkFile, signedApkFile, context.ksFile)
             alignedApkFile.delete()
 
             task = context.getString(R.string.installing)

@@ -1,12 +1,9 @@
 package com.leadrdrk.umapatcher
 
-import android.Manifest
-import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -81,23 +78,12 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun appInit() {
-        requestPermissions()
-
         // Init work directory
         workDir.mkdir()
         deleteRecursive(workDir, deleteRoot = false)
 
         // Request root permissions
         Shell.getShell { rootInitialized.value = true }
-    }
-
-    private fun requestPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val launcher = registerForActivityResult(
-                RequestPermission()
-            ) {}
-            launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
     }
 
     fun useKeepScreenOn(callback: () -> Unit) {

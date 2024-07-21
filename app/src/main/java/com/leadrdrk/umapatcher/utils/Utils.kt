@@ -1,8 +1,5 @@
 package com.leadrdrk.umapatcher.utils
 
-import android.content.Context
-import android.util.Log
-import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.google.gson.Gson
@@ -15,9 +12,6 @@ import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.security.MessageDigest
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 fun safeNavigate(lifecycleOwner: LifecycleOwner, callback: () -> Unit) {
     val currentState = lifecycleOwner.lifecycle.currentState
@@ -32,67 +26,6 @@ fun deleteRecursive(fileOrDirectory: File, deleteRoot: Boolean = true) {
             deleteRecursive(child)
 
     if (deleteRoot) fileOrDirectory.delete()
-}
-
-fun copyDirectory(
-    context: Context,
-    sourceLocation: File,
-    targetLocation: DocumentFile,
-    logParentPaths: String = "",
-    logCallback: (String) -> Unit = {}
-): Boolean {
-    if (sourceLocation.isDirectory) {
-        val children = sourceLocation.list() ?: return false
-        children.forEach { child ->
-            val childSourceLocation = File(sourceLocation, child)
-            val childTargetLocation = if (childSourceLocation.isDirectory)
-                targetLocation.createDirectoryOverwrite(child) else
-                targetLocation.createFileOverwrite(child)
-            if (childTargetLocation == null) return false
-
-            val newParentPaths = if (childSourceLocation.isDirectory)
-                "$logParentPaths/$child" else logParentPaths
-
-            if (!copyDirectory(context, childSourceLocation, childTargetLocation, newParentPaths, logCallback))
-                return false
-        }
-    } else {
-        logCallback("$logParentPaths/${sourceLocation.name}")
-        try {
-            sourceLocation.inputStream().use { input ->
-                context.contentResolver.openOutputStream(targetLocation.uri).use { output ->
-                    if (output == null) return false
-                    input.copyTo(output)
-                }
-            }
-        }
-        catch (ex: Exception) {
-            Log.e("UmaPatcher", "copyDirectory", ex)
-            return false
-        }
-    }
-    return true
-}
-
-fun unixTimestampToString(time: Int) = unixTimestampToString(time.toLong())
-fun unixTimestampToString(time: Long): String {
-    val d = Date(time * 1000L)
-    return SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.US).format(d)
-}
-
-fun downloadFile(url: URL, outputFile: File) {
-    val conn = url.openConnection() as HttpURLConnection
-    conn.doInput = true
-    conn.instanceFollowRedirects = true
-    conn.connect()
-
-    if (conn.responseCode != 200) throw IOException()
-
-    conn.inputStream.use { input ->
-        outputFile.outputStream().use { output ->
-            input.copyTo(output)
-        }
-    }
 }
 
 fun downloadFileAndDigestSHA1(url: URL, outputFile: File): ByteArray {

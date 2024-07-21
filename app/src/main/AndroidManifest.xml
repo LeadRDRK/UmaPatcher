@@ -29,5 +29,8 @@
 
     <queries>
         <package android:name="jp.co.cygames.umamusume" />
+        <package android:name="com.komoe.kmumamusumegp" />
+        <package android:name="com.komoe.umamusumeofficial" />
+        <package android:name="com.kakaogames.umamusume" />
     </queries>
 </manifest>

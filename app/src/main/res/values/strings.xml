@@ -10,9 +10,11 @@
     <string name="game_not_installed_info">Some features might not be available.</string>
     <string name="package_name_prefix">"Package: "</string>
     <string name="version_name_prefix">"Version: "</string>
+    <string name="tap_to_select_app">Tap here to select another app</string>
 
     <string name="app_patcher_label">App patching</string>
     <string name="patch">Patch</string>
+    <string name="select_an_app">Select an app</string>
 
     <!-- Settings -->
     <string name="check_for_updates_desc">Occasionally check for updates when the app starts.</string>

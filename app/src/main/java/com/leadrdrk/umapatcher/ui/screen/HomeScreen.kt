@@ -1,5 +1,6 @@
 package com.leadrdrk.umapatcher.ui.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -30,6 +31,8 @@ import com.leadrdrk.umapatcher.R
 import com.leadrdrk.umapatcher.core.GameChecker
 import com.leadrdrk.umapatcher.ui.component.TopBar
 import com.leadrdrk.umapatcher.ui.patcher.AppPatcherCard
+import com.leadrdrk.umapatcher.ui.screen.destinations.AppSelectScreenDestination
+import com.leadrdrk.umapatcher.utils.safeNavigate
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -59,7 +62,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            InstallStatusCard()
+            InstallStatusCard(navigator)
             AppPatcherCard(navigator)
             Spacer(Modifier.height(8.dp))
         }
@@ -67,14 +70,20 @@ fun HomeScreen(navigator: DestinationsNavigator) {
 }
 
 @Composable
-fun InstallStatusCard() {
+fun InstallStatusCard(navigator: DestinationsNavigator) {
     val pm = LocalContext.current.packageManager
     val packageInfo = GameChecker.getPackageInfo(pm)
+    val lifecycleOwner = LocalLifecycleOwner.current
     ElevatedCard(
-        colors = CardDefaults.elevatedCardColors(containerColor = run {
-            if (packageInfo != null) MaterialTheme.colorScheme.secondaryContainer
-            else MaterialTheme.colorScheme.errorContainer
-        })
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        ),
+        modifier = Modifier
+            .clickable {
+                safeNavigate(lifecycleOwner) {
+                    navigator.navigate(AppSelectScreenDestination)
+                }
+            }
     ) {
         Row(modifier = Modifier
             .fillMaxWidth()
@@ -99,11 +108,16 @@ fun InstallStatusCard() {
                         text = stringResource(R.string.version_name_prefix) + packageInfo.versionName,
                         style = MaterialTheme.typography.bodyMedium
                     )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = stringResource(R.string.tap_to_select_app),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 }
             }
             else {
                 val title = stringResource(R.string.game_not_installed)
-                Icon(Icons.Outlined.Warning, title)
+                Icon(Icons.Outlined.Info, title)
                 Column(Modifier.padding(start = 20.dp)) {
                     Text(
                         text = title,

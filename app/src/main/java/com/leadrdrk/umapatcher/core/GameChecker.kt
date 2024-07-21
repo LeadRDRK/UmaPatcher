@@ -4,35 +4,47 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 
 object GameChecker {
-    private const val PACKAGE_NAME_JP = "jp.co.cygames.umamusume"
+    private val packageNames = arrayOf(
+        "jp.co.cygames.umamusume",
+        "com.komoe.kmumamusumegp",
+        "com.komoe.umamusumeofficial",
+        "com.kakaogames.umamusume"
+    )
 
-    private var _packageInfo: PackageInfo? = null
-    private var _uid: Int? = null
+    var currentPackageName: String? = null
 
-    private fun populatePackageInfo(pm: PackageManager): Boolean {
-        return try {
-            _packageInfo = pm.getPackageInfo(PACKAGE_NAME_JP, 0)
-            true
-        } catch (e: PackageManager.NameNotFoundException) {
-            false
+    fun init(pm: PackageManager) {
+        // Defaults to whichever version is installed
+        for (packageName in packageNames) {
+            currentPackageName = packageName
+            if (getPackageInfo(pm) != null) {
+                return
+            }
         }
+        // Otherwise, the jp ver
+        currentPackageName = packageNames[0]
     }
 
     fun getPackageInfo(pm: PackageManager): PackageInfo? {
-        if (_packageInfo == null) populatePackageInfo(pm)
-        return _packageInfo
+        val packageName = currentPackageName ?: return null
+        return try {
+            pm.getPackageInfo(packageName, 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
     }
 
     fun isPackageInstalled(pm: PackageManager): Boolean {
         return getPackageInfo(pm) != null
     }
 
-    fun getUid(pm: PackageManager): Int? {
-        if (_uid == null) {
-            val packageInfo = getPackageInfo(pm)
-            if (packageInfo != null)
-                _uid = pm.getPackageUid(packageInfo.packageName, 0)
+    fun getAllPackageInfo(pm: PackageManager): Array<PackageInfo?> {
+        return Array(packageNames.size) {
+            try {
+                pm.getPackageInfo(packageNames[it], 0)
+            } catch (e: PackageManager.NameNotFoundException) {
+                null
+            }
         }
-        return _uid
     }
 }

@@ -28,6 +28,9 @@
     <string name="no_keystore_to_export">No keystore to export.</string>
     <string name="keystore_imported">Keystore imported.</string>
     <string name="failed_to_import_keystore">Failed to import keystore.</string>
+    <string name="force_redownload_mod">Force redownload Hachimi</string>
+    <string name="force_redownload_mod_desc">Invalidate the existing libraries and force them to be redownloaded.</string>
+    <string name="force_redownload_mod_notice">Hachimi will be redownloaded on the next app patching session.</string>
 
     <!-- About -->
     <string name="app_desc">UM:PD Hachimi mod patching tool for Android.</string>

@@ -23,7 +23,7 @@ object PrefKey {
 val defaultValues = mapOf(
     Pair(PrefKey.CHECK_FOR_UPDATES, true),
     Pair(PrefKey.LAST_UPDATE_CHECK, 0L),
-    Pair(PrefKey.APP_LIBS_VERSION, null)
+    Pair(PrefKey.APP_LIBS_VERSION, "")
 )
 
 suspend fun Context.getPrefValue(key: Preferences.Key<*>): Any? {

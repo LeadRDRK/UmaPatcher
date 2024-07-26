@@ -36,6 +36,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 fun SettingsScreen() {
     val context = LocalContext.current
     val checkForUpdates = remember { mutableStateOf(false) }
+    val appLibsVersion = remember { mutableStateOf("") }
     var configRead by remember { mutableStateOf(false) }
 
     val exportKsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -94,8 +95,13 @@ fun SettingsScreen() {
         it[PrefKey.CHECK_FOR_UPDATES] = checkForUpdates.value
     }
 
+    PrefUpdateEffect(appLibsVersion.value) {
+        it[PrefKey.APP_LIBS_VERSION] = appLibsVersion.value
+    }
+
     LaunchedEffect(true) {
         checkForUpdates.value = context.getPrefValue(PrefKey.CHECK_FOR_UPDATES) as Boolean
+        appLibsVersion.value = context.getPrefValue(PrefKey.APP_LIBS_VERSION) as String
         configRead = true
     }
 
@@ -150,6 +156,19 @@ fun SettingsScreen() {
                             type = "*/*"
                         }
                     importKsLauncher.launch(intent)
+                }
+            ) {
+            }
+
+            OptionBase(
+                title = stringResource(R.string.force_redownload_mod),
+                desc = stringResource(R.string.force_redownload_mod_desc),
+                onClick = {
+                    context.showToast(
+                        context.getString(R.string.force_redownload_mod_notice),
+                        Toast.LENGTH_SHORT
+                    )
+                    appLibsVersion.value = ""
                 }
             ) {
             }

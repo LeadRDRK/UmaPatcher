@@ -1,15 +1,11 @@
 -dontobfuscate
 
--dontwarn javax.xml.bind.DatatypeConverter
--dontwarn org.ietf.jgss.GSSContext
--dontwarn org.ietf.jgss.GSSCredential
--dontwarn org.ietf.jgss.GSSException
--dontwarn org.ietf.jgss.GSSManager
--dontwarn org.ietf.jgss.GSSName
--dontwarn org.ietf.jgss.Oid
--dontwarn org.slf4j.impl.StaticLoggerBinder
+-keep,allowoptimization class com.leadrdrk.** { *; }
 
--keep,allowoptimization class com.leadrdrk.**
+# I hate R8!!!
+-keep class androidx.compose.ui.res.** { *; }
+-keep class android.content.res.** { *; }
+-keep class com.android.apksig.** { *; }
 
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard

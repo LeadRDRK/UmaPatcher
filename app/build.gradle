@@ -18,16 +18,9 @@ android {
 
     buildTypes {
         release {
-            // TODO: ProGuard currently causes a lot of issues, needs more rules
-            /*
-            postprocessing {
-                removeUnusedCode true
-                removeUnusedResources true
-                obfuscate false
-                optimizeCode true
-                proguardFiles 'proguard-rules.pro'
-            }
-            */
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), 'proguard-rules.pro'
         }
     }
     compileOptions {

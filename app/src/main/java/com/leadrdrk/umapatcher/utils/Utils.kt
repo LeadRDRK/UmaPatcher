@@ -3,7 +3,6 @@ package com.leadrdrk.umapatcher.utils
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.google.gson.Gson
-import net.lingala.zip4j.ZipFile
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -28,22 +27,29 @@ fun deleteRecursive(fileOrDirectory: File, deleteRoot: Boolean = true) {
     if (deleteRoot) fileOrDirectory.delete()
 }
 
-fun downloadFileAndDigestSHA1(url: URL, outputFile: File): ByteArray {
+fun downloadFileAndDigestSHA1(url: URL, outputFile: File, onProgress: (Float) -> Unit): ByteArray {
     val conn = url.openConnection() as HttpURLConnection
     conn.doInput = true
     conn.instanceFollowRedirects = true
     conn.connect()
 
     if (conn.responseCode != 200) throw IOException()
+    val contentLength = conn.contentLengthLong
 
     val sha1 = MessageDigest.getInstance("SHA-1")
     conn.inputStream.use { input ->
         outputFile.outputStream().use { output ->
             val dataBuffer = ByteArray(1024)
+            var totalBytesRead = 0L
             var bytesRead: Int
             while (input.read(dataBuffer, 0, 1024).also { bytesRead = it } != -1) {
                 output.write(dataBuffer, 0, bytesRead)
                 sha1.update(dataBuffer, 0, bytesRead)
+
+                totalBytesRead += bytesRead
+                if (contentLength != -1L) {
+                    onProgress(totalBytesRead.toFloat() / contentLength)
+                }
             }
         }
     }
@@ -84,15 +90,6 @@ fun bytesToHex(bytes: ByteArray): String {
         hexChars[j * 2 + 1] = HEX_ARRAY[v and 0x0F]
     }
     return String(hexChars)
-}
-
-fun ZipFile.hasDirectory(dir: String): Boolean {
-    fileHeaders.forEach {
-        if (it.fileName.startsWith(dir)) {
-            return true
-        }
-    }
-    return false
 }
 
 fun InputStream.copyTo(out: OutputStream, onProgress: (currentBytes: Int) -> Unit) {

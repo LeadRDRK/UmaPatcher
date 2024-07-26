@@ -15,6 +15,9 @@
     <string name="app_patcher_label">App patching</string>
     <string name="patch">Patch</string>
     <string name="select_an_app">Select an app</string>
+    <string name="n_files_selected">%d files selected</string>
+    <string name="tap_to_select_file">Tap here to select files</string>
+    <string name="app_patcher_supported_files">Supported files: APK / Split APKs, XAPK</string>
 
     <!-- Settings -->
     <string name="check_for_updates_desc">Occasionally check for updates when the app starts.</string>
@@ -37,11 +40,8 @@
     <string name="install_method">Install method</string>
     <string name="install_method_desc">How you want the patch to be installed.</string>
     <string name="direct_install">Direct install (root required)</string>
-    <string name="select_and_patch_a_file">Select and patch a file</string>
-    <string name="apk_file">APK file</string>
-    <string name="apk_file_desc">Which APK file you want to patch.</string>
-    <string name="get_apk_file_from_app">Get APK file from installed app</string>
-    <string name="save_patched_apk_file">Save patched APK file</string>
+    <string name="save_patched_file">Save patched file</string>
+    <string name="normal_install">Normal install</string>
 
     <!-- Patching -->
     <string name="working">Working...</string>
@@ -51,34 +51,42 @@
     <string name="direct_install_unavailable">Direct install can only be used when the game is installed.</string>
     <string name="root_required">Root permission is required for this operation.</string>
     <string name="failed_to_read_file">Failed to read file: %s</string>
-    <string name="copying_file">Copying file: %s</string>
+    <string name="failed_to_move_file">Failed to move file: %s</string>
+    <string name="copying_file">Copying file</string>
+    <string name="copying_file_name">Copying file: %s</string>
+    <string name="patching">Patching</string>
     <string name="installing">Installing</string>
-    <string name="install_completed">Install completed</string>
-    <string name="install_failed">Install failed</string>
+    <string name="install_completed">Install completed.</string>
+    <string name="install_failed">Install failed.</string>
     <string name="file_saved">File saved.</string>
     <string name="failed_to_save_file">Failed to save file.</string>
+    <string name="extracting_file">Extracting file: %s</string>
+    <string name="creating_file">Creating file: %s</string>
+    <string name="cleaning_up">Cleaning up</string>
 
     <!-- AppPatcher -->
     <string name="syncing_app_libs">Syncing Hachimi libraries</string>
-    <string name="failed_to_download_app_libs">Failed to download Hachimi libraries</string>
+    <string name="downloading_file">Downloading file: %s</string>
+    <string name="failed_to_download_app_libs">Failed to download Hachimi libraries.</string>
     <string name="failed_to_sync_app_libs">Failed to sync Hachimi libraries. Skipping.</string>
-    <string name="app_lib_updated">Hachimi has been updated</string>
+    <string name="app_lib_updated">Hachimi has been updated.</string>
     <string name="using_app_lib_ver">Using Hachimi %s</string>
-    <string name="corrupted_file_abort_download">Corrupted file detected, aborting download</string>
-    <string name="patching_apk_file">Patching APK file</string>
-    <string name="aligning_apk_file">Aligning APK file</string>
-    <string name="signing_apk_file">Signing APK file</string>
-    <string name="unmounting_apk_file">Unmounting APK file</string>
-    <string name="mount_install_note">
-        \n
-        ********** NOTE **********\n
-        The modified app has now been mounted. However, this will be reverted whenever your
-        device restarts, which will undo the modification on some devices. To remount the app
-        after a restart, open UmaPatcher and tap on the Mount button in the App patcher section.
-    </string>
-    <string name="mount">Mount</string>
-    <string name="unmount">Unmount</string>
-    <string name="apk_file_missing_lib">Invalid or incomplete APK file (missing native libraries)</string>
+    <string name="corrupted_file_abort_download">Corrupted file detected, aborting download.</string>
+    <string name="signing_apk_file">Signing APK file: %s</string>
+    <string name="apk_files_missing_lib">Invalid or incomplete APK files (missing native libraries)</string>
+    <string name="app_lib_dir_not_found">No app lib directory was found. Nothing has been installed.</string>
+    <string name="invalid_apk_file">Invalid APK file.</string>
+    <string name="invalid_apk_file_name">Invalid APK file: %s</string>
+    <string name="detected_apk_split">Detected APK split type: %s</string>
+    <string name="libraries_patched">Libraries patched: %s</string>
+    <string name="invalid_apk_splits_duplicate">Invalid APK splits; another %s APK was found.</string>
+    <string name="apk_splits_missing_base">Base APK missing from APK splits.</string>
+    <string name="invalid_split_apk_multiple_type">Invalid split APK. Multiple types were detected in one file.</string>
+    <string name="detected_xapk_file">Detected XAPK file.</string>
+    <string name="detected_apk_file">Detected normal APK file.</string>
+    <string name="patching_as_split_apks">Patching as split APKs.</string>
+    <string name="staging_app">Staging app</string>
+    <string name="removing_legacy_files">Removing legacy files</string>
 
     <!-- Other -->
     <string name="cancel">Cancel</string>

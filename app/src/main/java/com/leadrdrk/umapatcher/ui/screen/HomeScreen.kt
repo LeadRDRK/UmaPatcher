@@ -111,7 +111,8 @@ fun InstallStatusCard(navigator: DestinationsNavigator) {
                     Spacer(Modifier.height(4.dp))
                     Text(
                         text = stringResource(R.string.tap_to_select_app),
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }

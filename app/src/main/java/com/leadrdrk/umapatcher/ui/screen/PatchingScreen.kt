@@ -51,7 +51,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 
-const val MAX_LOG_LINES = 200
+private const val MAX_LOG_LINES = 200
 
 @Destination
 @Composable
@@ -98,7 +98,7 @@ fun PatchingScreen(navigator: DestinationsNavigator) {
 
                 val file = sfFile!!
                 val length = file.length().toFloat()
-                currentTask = context.getString(R.string.copying_file).format(file.name)
+                onTask(context.getString(R.string.copying_file_name).format(file.name))
                 progress = 0f
                 file.inputStream().use { input ->
                     input.copyTo(output) { current ->

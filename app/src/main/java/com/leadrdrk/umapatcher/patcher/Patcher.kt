@@ -7,8 +7,12 @@ import com.leadrdrk.umapatcher.core.GameChecker
 import com.leadrdrk.umapatcher.utils.copyTo
 import com.topjohnwu.superuser.Shell
 import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
 import java.io.PrintWriter
 import java.io.StringWriter
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 abstract class Patcher(
     private var onLog: (String) -> Unit = {},
@@ -68,18 +72,24 @@ abstract class Patcher(
         Log.e("UmaPatcher", "logException", ex)
     }
 
-    protected fun saveFile(filename: String, file: File, callback: (Boolean) -> Unit = {}) {
-        onSaveFile(filename, file, callback)
+    protected suspend fun saveFile(filename: String, file: File): Boolean {
+        return suspendCoroutine { cont ->
+            onSaveFile(filename, file) { cont.resume(it) }
+        }
     }
 
     protected fun copyFileProgress(srcFile: File, dstFile: File) {
         srcFile.inputStream().use { input ->
             dstFile.outputStream().use { output ->
-                val length = srcFile.length().toFloat()
-                input.copyTo(output) { current ->
-                    progress = current / length
-                }
+                copyStreamProgress(input, output, srcFile.length())
             }
+        }
+    }
+
+    protected fun copyStreamProgress(input: InputStream, output: OutputStream, length: Long) {
+        val lengthFloat = length.toFloat()
+        input.copyTo(output) { current ->
+            progress = current / lengthFloat
         }
     }
 

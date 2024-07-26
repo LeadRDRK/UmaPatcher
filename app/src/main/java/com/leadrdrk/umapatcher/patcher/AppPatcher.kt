@@ -37,7 +37,6 @@ import java.io.File
 import java.io.IOException
 import java.net.URL
 
-
 private const val LIBS_REPO_PATH = "Hachimi-Hachimi/Hachimi"
 
 private const val MOD_ARM64_LIB_NAME = "libmain-arm64-v8a.so"
@@ -188,7 +187,11 @@ class AppPatcher(
             return false
         }
         finally {
+            task = context.getString(R.string.cleaning_up)
+            progress = -1f
+
             extractDir.deleteRecursively()
+            context.apkExtractDir.deleteRecursively()
         }
     }
 
@@ -214,8 +217,12 @@ class AppPatcher(
             return false
         }
         finally {
+            task = context.getString(R.string.cleaning_up)
+            progress = -1f
+
             zip.close()
             zip.file.delete()
+            context.apkExtractDir.deleteRecursively()
         }
     }
 
@@ -236,7 +243,11 @@ class AppPatcher(
             return false
         }
         finally {
+            task = context.getString(R.string.cleaning_up)
+            progress = -1f
+
             files.forEach { it.delete() }
+            context.apkExtractDir.deleteRecursively()
         }
     }
 

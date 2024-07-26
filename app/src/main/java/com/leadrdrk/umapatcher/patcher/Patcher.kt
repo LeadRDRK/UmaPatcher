@@ -28,6 +28,7 @@ abstract class Patcher(
 
     var task: String = ""
         set(value) {
+            if (field == value) return
             field = value
             onTask(value)
         }

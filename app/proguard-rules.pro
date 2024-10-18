@@ -6,6 +6,10 @@
 -keep class androidx.compose.ui.res.** { *; }
 -keep class android.content.res.** { *; }
 -keep class com.android.apksig.** { *; }
+-keep class org.bouncycastle.jcajce.provider.** { *; }
+-keep class org.bouncycastle.jce.provider.** { *; }
+
+-dontwarn javax.naming.**
 
 ##---------------Begin: proguard configuration for Gson  ----------
 # Gson uses generic type information stored in a class file when working with fields. Proguard

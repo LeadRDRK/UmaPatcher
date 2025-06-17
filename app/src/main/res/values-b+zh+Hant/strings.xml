@@ -57,7 +57,7 @@
     <string name="extracting_file">正在解壓縮檔案：%s</string>
     <string name="creating_file">正在建立檔案：%s</string>
     <string name="cleaning_up">正在清理</string>
-    <string name="syncing_app_libs">正在同步 Hachimio 程式庫</string>
+    <string name="syncing_app_libs">正在同步 Hachimi 程式庫</string>
     <string name="downloading_file">正在下載檔案：%s</string>
     <string name="failed_to_sync_app_libs">未能同步 Hachimi 程式庫，已跳過。</string>
     <string name="app_lib_updated">Hachimi 已更新。</string>
@@ -81,6 +81,6 @@
     <string name="keystore_imported">已匯入密鑰庫。</string>
     <string name="force_redownload_mod_desc">使現有程式庫無效化並強制重新下載。</string>
     <string name="apk_files_missing_lib">APK 檔案無效或不完整（缺少本地程式庫）</string>
-    <string name="invalid_apk_splits_duplicate">無效的 APK 拆分：偵測到另一個 %s APK。</string>
-    <string name="apk_splits_missing_base">APK 拆分中缺少 Base APK。</string>
+    <string name="invalid_apk_splits_duplicate">無效的拆分 APK：偵測到另一個 %s APK。</string>
+    <string name="apk_splits_missing_base">拆分 APK 中缺少 Base APK。</string>
 </resources>

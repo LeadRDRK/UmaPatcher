@@ -10,7 +10,7 @@
     <string name="version_name_prefix">"版本："</string>
     <string name="tap_to_select_app">点击此处选择其他应用</string>
     <string name="app_patcher_label">应用补丁</string>
-    <string name="patch">补丁</string>
+    <string name="patch">开始补丁</string>
     <string name="select_an_app">选择一个应用</string>
     <string name="n_files_selected">已选择 %d 个文件</string>
     <string name="tap_to_select_file">点击此处选择文件</string>
@@ -69,8 +69,8 @@
     <string name="invalid_apk_file_name">无效的 APK 文件：%s</string>
     <string name="detected_apk_split">检测到 APK 拆分类型：%s</string>
     <string name="libraries_patched">已补丁库：%s</string>
-    <string name="invalid_apk_splits_duplicate">无效的 APK 拆分；发现了另一个 %s APK。</string>
-    <string name="apk_splits_missing_base">APK 拆分中缺少 Base APK。</string>
+    <string name="invalid_apk_splits_duplicate">无效的拆分 APK；发现了另一个 %s APK。</string>
+    <string name="apk_splits_missing_base">拆分 APK 中缺少 Base APK。</string>
     <string name="invalid_split_apk_multiple_type">无效的拆分 APK。在一个文件中检测到多种类型。</string>
     <string name="detected_xapk_file">检测到 XAPK 文件。</string>
     <string name="detected_apk_file">检测到普通 APK 文件。</string>
